@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "__APPNAME__ApiGeneratorApp": {
+      "commandName": "Project",
+      "commandLineArgs": "--Output:DefaultVersion \"Current\"",
+      "workingDirectory": "$(SolutionDir)",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

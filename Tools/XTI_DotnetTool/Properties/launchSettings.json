@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "XTI_DotnetTool": {
+      "commandName": "Project",
+      "commandLineArgs": "--Directory C:\\Users\\xarto\\source --AppName Test --AppType WebApp --DeleteExisting true",
+      "workingDirectory": "C:\\XTI\\src\\XtiTemplates\\Tools\\XTI_DotnetTool"
+    }
+  }
+}

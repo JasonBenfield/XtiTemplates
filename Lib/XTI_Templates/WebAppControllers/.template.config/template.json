@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Jason Benfield",
+  "classifications": [ "Common", "Library" ],
+  "identity": "XTI_Templates.WebAppControllers",
+  "name": "XTI_Templates.WebAppControllers",
+  "shortName": "xtiwebappcontrollers",
+  "tags": {
+    "type": "project",
+    "language": "en-US"
+  },
+  "symbols": {
+    "AppName": {
+      "type": "parameter",
+      "datatype": "string",
+      "isRequired": true,
+      "defaultValue": "TheApp",
+      "FileRename": "AppName",
+      "replaces": "__APPNAME__"
+    }
+  }
+}

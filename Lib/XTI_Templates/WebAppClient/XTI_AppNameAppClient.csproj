@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<Import Project="..\\..\\Common.Targets" />
+
+	<ItemGroup>
+		<PackageReference Include="XTI_App.Api" Version="1.8.13-dev220105084200749" />
+		<PackageReference Include="XTI_WebAppClient" Version="1.8.9-dev220106232327756" />
+		<PackageReference Include="XTI_TempLog.Abstractions" Version="1.2.23" />
+	</ItemGroup>
+
+</Project>

@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<PackageType>Template</PackageType>
+		<PackageVersion>1.0</PackageVersion>
+		<PackageId>XTI_Templates</PackageId>
+		<Title>XTI Templates</Title>
+		<Authors>Jason Benfield</Authors>
+		<Description>Templates for XTI apps.</Description>
+		<PackageTags>dotnet-new;templates;XTI</PackageTags>
+		<TargetFramework>net6.0</TargetFramework>
+		<IncludeContentInPack>true</IncludeContentInPack>
+		<IncludeBuildOutput>false</IncludeBuildOutput>
+		<ContentTargetFolders>content</ContentTargetFolders>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Content Include="WebAppApi\**\*" Exclude="WebAppApi\**\bin\**;WebAppApi\**\obj\**" />
+		<Content Include="WebAppControllers\**\*" Exclude="WebAppControllers\**\bin\**;WebAppControllers\**\obj\**" />
+		<Content Include="WebAppExtensions\**\*" Exclude="WebAppExtensions\**\bin\**;WebAppExtensions\**\obj\**" />
+		<Content Include="WebAppClient\**\*" Exclude="WebAppClient\**\bin\**;WebAppClient\**\obj\**" />
+		<Content Include="WebAppSolution\**\*" Exclude="WebAppSolution\**\bin\**;WebAppSolution\**\obj\**" />
+		<Content Include="WebApp\**\*" Exclude="WebApp\**\bin\**;WebApp\**\obj\**" />
+		<Content Include="ApiGeneratorApp\**\*" Exclude="ApiGeneratorApp\**\bin\**;ApiGeneratorApp\**\obj\**" />
+		<Content Include="SetupApp\**\*" Exclude="SetupApp\**\bin\**;SetupApp\**\obj\**" />
+		<Compile Remove="**\*" />
+	</ItemGroup>
+</Project>
