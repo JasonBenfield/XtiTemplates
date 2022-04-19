@@ -1,6 +1,6 @@
-﻿using XTI___APPNAME__AppApi.Home;
+﻿using XTI___APPNAME__WebAppApi.Home;
 
-namespace XTI___APPNAME__AppApi;
+namespace XTI___APPNAME__WebAppApi;
 
 partial class __APPNAME__AppApi
 {
@@ -12,7 +12,7 @@ partial class __APPNAME__AppApi
     {
         home = new HomeGroup
         (
-            source.AddGroup(nameof(Home)),
+            source.AddGroup(nameof(Home), ResourceAccess.AllowAuthenticated()),
             sp
         );
     }

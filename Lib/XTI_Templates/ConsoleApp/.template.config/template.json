@@ -2,13 +2,14 @@
   "$schema": "http://json.schemastore.org/template",
   "author": "Jason Benfield",
   "classifications": [ "Common", "Library" ],
-  "identity": "XTI_Templates.WebAppSolution",
-  "name": "XTI_Templates.WebAppSolution",
-  "shortName": "xtiwebappsolution",
+  "identity": "XTI_Templates.ConsoleApp",
+  "name": "XTI_Templates.ConsoleApp",
+  "shortName": "xticonsoleapp",
   "tags": {
     "type": "project",
     "language": "en-US"
   },
+  "placeholderFilename": ".keep",
   "symbols": {
     "AppName": {
       "type": "parameter",

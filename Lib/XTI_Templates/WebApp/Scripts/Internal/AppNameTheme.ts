@@ -4,8 +4,8 @@ import { Toolbar } from "@jasonbenfield/sharedwebapp/Html/Toolbar";
 import { PaddingCss } from "@jasonbenfield/sharedwebapp/PaddingCss";
 import { TextCss } from "@jasonbenfield/sharedwebapp/TextCss";
 
-export class HubTheme {
-    public static readonly instance = new HubTheme();
+export class __APPNAME__Theme {
+    public static readonly instance = new __APPNAME__Theme();
 
     readonly listItem = {
         deleteButton() {

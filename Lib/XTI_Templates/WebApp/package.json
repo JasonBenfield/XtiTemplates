@@ -1,10 +1,14 @@
 {
-  "name": "__APPNAME__webapp",
+  "name": "@__RepoOwner__/__APPNAME__webapp",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "github:__RepoOwner__/__APPNAME__WebApp",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   },
   "author": "",
   "license": "ISC",

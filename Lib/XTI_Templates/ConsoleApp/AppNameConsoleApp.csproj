@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="XTI_HubAppClient.ConsoleApp.Extensions" Version="1.4.7" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\Internal\__APPNAME__ConsoleApp.Extensions\__APPNAME__ConsoleApp.Extensions.csproj" />
+	</ItemGroup>
+
+</Project>

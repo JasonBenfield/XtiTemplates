@@ -1,6 +1,6 @@
-﻿using XTI___APPNAME__AppApi.Home;
+﻿using XTI___APPNAME__WebAppApi.Home;
 
-namespace XTI___APPNAME__AppApi;
+namespace XTI___APPNAME__WebAppApi;
 
 internal static class HomeGroupExtensions
 {

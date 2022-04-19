@@ -1,6 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using XTI_Core;
+using XTI_Git;
+using XTI_GitHub;
 using XTI_Processes;
 
 namespace XTI_DotnetTool;
@@ -20,41 +23,88 @@ internal sealed class HostedService : IHostedService
         try
         {
             var options = scope.ServiceProvider.GetRequiredService<IOptions<ToolOptions>>().Value;
-            if (string.IsNullOrWhiteSpace(options.AppName)) { throw new ArgumentException("App Name is required."); }
-            if (string.IsNullOrWhiteSpace(options.AppType)) { throw new ArgumentException("App Type is required."); }
-            var appType = new[] { "WebApp", "ServiceApp", "ConsoleApp" }.FirstOrDefault(str => str.Equals(options.AppType.Replace(" ", "")));
-            if (appType == null) { throw new NotSupportedException($"App type '{options.AppType}' is not supported"); }
-            var appName = options.AppName.Replace(" ", "");
-            var fullAppName = $"{appName}{appType}";
-            await DotnetInstallTemplate("WebAppApi");
-            await DotnetInstallTemplate("WebAppControllers");
-            await DotnetInstallTemplate("WebAppClient");
-            await DotnetInstallTemplate("WebAppExtensions");
-            await DotnetInstallTemplate("ApiGeneratorApp");
-            await DotnetInstallTemplate("SetupApp");
-            await DotnetInstallTemplate("WebApp");
-            await DotnetInstallTemplate("WebAppSolution");
-            var dir = string.IsNullOrWhiteSpace(options.Directory) ? Environment.CurrentDirectory : options.Directory;
-            var slnDir = Path.Combine(dir, fullAppName);
-            if (options.DeleteExisting)
+            if (options.Command.Equals("uninstall", StringComparison.InvariantCultureIgnoreCase))
             {
-                if (Directory.Exists(slnDir)) { Directory.Delete(slnDir, true); }
+                await DotnetUninstallTemplatesLocally();
             }
-            await DotnetNewSln(slnDir);
-            var appsDir = CreateDirIfNotExists(Path.Combine(slnDir, "Apps"));
-            var internalDir = CreateDirIfNotExists(Path.Combine(slnDir, "Internal"));
-            var libDir = CreateDirIfNotExists(Path.Combine(slnDir, "Lib"));
-            if (appType == "WebApp")
+            else if (options.Command.Equals("install", StringComparison.InvariantCultureIgnoreCase))
             {
-                await DotnetNewWebAppSolution(slnDir, appName);
-                await DotnetNewApiGeneratorApp(appsDir, appName);
-                await DotnetNewWebAppApi(internalDir, appName);
-                await DotnetNewWebAppControllers(internalDir, appName);
-                await DotnetNewWebAppClient(libDir, appName);
-                await DotnetNewWebAppExtensions(internalDir, appName);
-                await DotnetNewApiGeneratorApp(appsDir, appName);
-                await DotnetNewSetupApp(appsDir, appName);
-                await DotnetNewWebApp(appsDir, appName);
+                await DotnetInstallTemplatesLocally();
+            }
+            else
+            {
+                if (string.IsNullOrWhiteSpace(options.RepoOwner)) { throw new ArgumentException("Repo Owner is required."); }
+                if (string.IsNullOrWhiteSpace(options.RepoName)) { throw new ArgumentException("Repo Name is required."); }
+                if (options.InstallTemplatesLocally)
+                {
+                    await DotnetInstallTemplatesLocally();
+                }
+                var srcDir = options.SrcDir;
+                if (string.IsNullOrWhiteSpace(srcDir))
+                {
+                    var xtiFolder = scope.ServiceProvider.GetRequiredService<XtiFolder>();
+                    srcDir = Path.Combine(xtiFolder.FolderPath(), "src", options.RepoOwner, options.RepoName);
+                }
+                var slnDir = Path.Combine(srcDir, options.RepoOwner, options.RepoName);
+                if (options.DeleteExisting && Directory.Exists(slnDir))
+                {
+                    Directory.Delete(slnDir, true);
+                }
+                if (!Directory.Exists(slnDir))
+                {
+                    Directory.CreateDirectory(slnDir);
+                }
+                Environment.CurrentDirectory = slnDir;
+                var appType = getAppType(options);
+                var appName = options.AppName.Replace(" ", "");
+                var fullAppName = $"{appName}{appType}";
+                if (options.Command.Equals("apigroup", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    await DotnetNewApiGroup(options, appName);
+                }
+                else
+                {
+                    var gitHubFactory = sp.GetRequiredService<IGitHubFactory>();
+                    var gitHubRepo = await gitHubFactory.CreateNewGitHubRepositoryIfNotExists(options.RepoOwner, options.RepoName);
+                    if (!Directory.Exists(slnDir) || (!Directory.GetFiles(slnDir).Any() && !Directory.GetDirectories(slnDir).Any()))
+                    {
+                        var gitFactory = sp.GetRequiredService<IXtiGitFactory>();
+                        var repoInfo = await gitHubRepo.RepositoryInformation();
+                        await gitFactory.CloneRepository(repoInfo.CloneUrl, slnDir);
+                        await DotnetNewSln();
+                    }
+                    if (appType != "")
+                    {
+                        CreateDirIfNotExists(getLibDir(options));
+                        if (appType != "Package")
+                        {
+                            CreateDirIfNotExists(getAppsDir(options));
+                            CreateDirIfNotExists(getInternalDir(options));
+                        }
+                    }
+                    await DotnetNewXtiSolution(options.RepoOwner, options.RepoName);
+                    if (appType == "WebApp")
+                    {
+                        if (string.IsNullOrWhiteSpace(options.AppName)) { throw new ArgumentException("App Name is required."); }
+                        await AddWebAppProjects(options, appName);
+                        await NpmInstall(options);
+                    }
+                    else if (appType == "ServiceApp")
+                    {
+                        if (string.IsNullOrWhiteSpace(options.AppName)) { throw new ArgumentException("App Name is required."); }
+                        await AddServiceAppProjects(options, appName);
+                    }
+                    else if (appType == "ConsoleApp")
+                    {
+                        if (string.IsNullOrWhiteSpace(options.AppName)) { throw new ArgumentException("App Name is required."); }
+                        await AddConsoleAppProjects(options, appName);
+                    }
+                    else if (appType == "Package")
+                    {
+                        if (string.IsNullOrWhiteSpace(options.AppName)) { throw new ArgumentException("App Name is required."); }
+                        await DotnetNewPackageExport(options, appName);
+                    }
+                }
             }
         }
         catch (Exception ex)
@@ -66,13 +116,147 @@ internal sealed class HostedService : IHostedService
         lifetime.StopApplication();
     }
 
-    private static async Task DotnetNewSln(string slnDir)
+    private static async Task DotnetNewApiGroup(ToolOptions options, string appName)
     {
-        CreateDirIfNotExists(slnDir);
-        Console.WriteLine($"running dotnet new sln '{slnDir}'");
+        if (string.IsNullOrWhiteSpace(options.GroupName)) { throw new ArgumentException("Group Name is required."); }
+        var templateName = "xtiapigroup";
+        var appType = getAppType(options);
+        var projectDir = Path.Combine(getInternalDir(options), $"XTI_{appName}{appType}Api");
+        if (!Directory.Exists(projectDir))
+        {
+            throw new ArgumentException($"Project Directory '{projectDir}' does not exist.");
+        }
+        if (Directory.Exists(Path.Combine(projectDir, options.GroupName)))
+        {
+            throw new ArgumentException($"Api Group '{options.GroupName}' already exists.");
+        }
+        Console.WriteLine($"running dotnet new '{templateName}' '{projectDir}'");
+        var dotnetNewResult = await new WinProcess("dotnet")
+            .WriteOutputToConsole()
+            .SetWorkingDirectory(projectDir)
+            .AddArgument("new")
+            .AddArgument(templateName)
+            .UseArgumentNameDelimiter("--")
+            .AddArgument("AppName", appName)
+            .AddArgument("AppType", appType)
+            .AddArgument("GroupName", options.GroupName)
+            .Run();
+        dotnetNewResult.EnsureExitCodeIsZero();
+    }
+
+    private static async Task NpmInstall(ToolOptions options)
+    {
+        var result = await new CmdProcess
+        (
+            new WinProcess("npm").AddArgument("install")
+        )
+        .WriteOutputToConsole()
+        .SetWorkingDirectory(Path.Combine(getAppsDir(options), getFullAppName(options)))
+        .Run();
+        result.EnsureExitCodeIsZero();
+    }
+
+    private static string getFullAppName(ToolOptions options)
+    {
+        var appName = getAppName(options);
+        var appType = getAppType(options);
+        var fullAppName = appType == "Package" ? appName : $"{appName}{appType}";
+        return fullAppName;
+    }
+
+    private static string getAppName(ToolOptions options) => options.AppName.Replace(" ", "");
+
+    private static string getAppsDir(ToolOptions options)
+    {
+        return Path.Combine(Environment.CurrentDirectory, getFullAppName(options), "Apps");
+    }
+
+    private static string getInternalDir(ToolOptions options)
+    {
+        return Path.Combine(Environment.CurrentDirectory, getFullAppName(options), "Internal");
+    }
+
+    private static string getLibDir(ToolOptions options)
+    {
+        return Path.Combine(Environment.CurrentDirectory, getFullAppName(options), "Lib");
+    }
+
+    private static string getAppType(ToolOptions options)
+    {
+        var appType = new[] { "", "WebApp", "ServiceApp", "ConsoleApp", "Package" }.FirstOrDefault(str => str.Equals(options.AppType.Replace(" ", "")));
+        if (appType == null) { throw new NotSupportedException($"App type '{options.AppType}' is not supported"); }
+        return appType;
+    }
+
+    private static async Task AddConsoleAppProjects(ToolOptions options, string appName)
+    {
+        await DotnetNewConsoleApp(options, appName);
+        await DotnetNewConsoleAppApi(options, appName);
+        await DotnetNewConsoleAppExtensions(options, appName);
+        await DotnetNewSetupApp(options, appName);
+    }
+
+    private static async Task AddServiceAppProjects(ToolOptions options, string appName)
+    {
+        await DotnetNewServiceApp(options, appName);
+        await DotnetNewServiceAppApi(options, appName);
+        await DotnetNewServiceAppExtensions(options, appName);
+        await DotnetNewSetupApp(options, appName);
+    }
+
+    private static async Task AddWebAppProjects(ToolOptions options, string appName)
+    {
+        await DotnetNewWebApp(options, appName);
+        await DotnetNewWebAppApi(options, appName);
+        await DotnetNewWebAppControllers(options, appName);
+        await DotnetNewWebAppClient(options, appName);
+        await DotnetNewWebAppExtensions(options, appName);
+        await DotnetNewApiGeneratorApp(options, appName);
+        await DotnetNewSetupApp(options, appName);
+    }
+
+    private static readonly string[] LocalTemplateNames = new[]
+    {
+        "ApiGeneratorApp",
+        "ApiGroup",
+        "ConsoleApp",
+        "ConsoleAppApi",
+        "ConsoleAppExtensions",
+        "PackageExport",
+        "ServiceApp",
+        "ServiceAppApi",
+        "ServiceAppExtensions",
+        "SetupApp",
+        "WebApp",
+        "WebAppApi",
+        "WebAppClient",
+        "WebAppControllers",
+        "WebAppExtensions",
+        "XtiSolution"
+    };
+
+    private static async Task DotnetUninstallTemplatesLocally()
+    {
+        foreach (var templateName in LocalTemplateNames)
+        {
+            await DotnetUninstallTemplateLocally(templateName);
+        }
+    }
+
+    private static async Task DotnetInstallTemplatesLocally()
+    {
+        foreach (var templateName in LocalTemplateNames)
+        {
+            await DotnetInstallTemplateLocally(templateName);
+        }
+    }
+
+    private static async Task DotnetNewSln()
+    {
+        Console.WriteLine($"running dotnet new sln '{Environment.CurrentDirectory}'");
         var newSlnResult = await new WinProcess("dotnet")
             .WriteOutputToConsole()
-            .SetWorkingDirectory(slnDir)
+            .SetWorkingDirectory(Environment.CurrentDirectory)
             .AddArgument("new")
             .AddArgument("sln")
             .Run();
@@ -85,9 +269,23 @@ internal sealed class HostedService : IHostedService
         return dir;
     }
 
-    private static async Task DotnetInstallTemplate(string name)
+    private static async Task DotnetInstallTemplateLocally(string name)
     {
-        var templateDir = Path.Combine("..", "..", "Lib", "XTI_Templates", name);
+        await DotnetUninstallTemplateLocally(name);
+        var templateDir = getLocalTemplateDir(name);
+        var process = new WinProcess("dotnet")
+            .WriteOutputToConsole()
+            .AddArgument("new")
+            .UseArgumentNameDelimiter("--")
+            .AddArgument("install", templateDir);
+        Console.WriteLine(process.CommandText());
+        var result = await process.Run();
+        result.EnsureExitCodeIsZero();
+    }
+
+    private static async Task DotnetUninstallTemplateLocally(string name)
+    {
+        var templateDir = getLocalTemplateDir(name);
         Console.WriteLine($"Uninstalling template '{templateDir}'");
         await new WinProcess("dotnet")
             .WriteOutputToConsole()
@@ -96,22 +294,17 @@ internal sealed class HostedService : IHostedService
             .AddArgument("uninstall", templateDir)
             .Run();
         Console.WriteLine($"Installing template '{templateDir}'");
-        var result = await new WinProcess("dotnet")
-            .WriteOutputToConsole()
-            .AddArgument("new")
-            .UseArgumentNameDelimiter("--")
-            .AddArgument("install", templateDir)
-            .Run();
-        result.EnsureExitCodeIsZero();
     }
 
-    private static async Task DotnetNewWebAppSolution(string slnDir, string appName)
+    private static string getLocalTemplateDir(string name) =>
+        Path.Combine("..", "..", "Lib", "XTI_Templates", name);
+
+    private static async Task DotnetNewXtiSolution(string repoOwner, string repoName)
     {
-        var solutionFiles = new[] { "xti.private.ps1", "xti.ps1", "common.targets" };
-        var psFileName = $"xti.ps1";
+        var solutionFiles = new[] { "xti.private.ps1", "xti.ps1" };
         if
         (
-            Directory.GetFiles(slnDir)
+            Directory.GetFiles(Environment.CurrentDirectory)
                 .Select(f => Path.GetFileName(f))
                 .Intersect(solutionFiles, StringComparer.InvariantCultureIgnoreCase)
                 .Any()
@@ -121,42 +314,91 @@ internal sealed class HostedService : IHostedService
         }
         else
         {
-            var templateName = "xtiwebappsolution";
-            Console.WriteLine($"running dotnet new '{templateName}' '{slnDir}'");
+            Console.WriteLine($"running dotnet new xtisolution '{Environment.CurrentDirectory}'");
             var dotnetNewResult = await new WinProcess("dotnet")
                 .WriteOutputToConsole()
-                .SetWorkingDirectory(slnDir)
+                .SetWorkingDirectory(Environment.CurrentDirectory)
                 .AddArgument("new")
-                .AddArgument(templateName)
+                .AddArgument("xtisolution")
                 .UseArgumentNameDelimiter("--")
-                .AddArgument("AppName", appName)
+                .AddArgument("RepoName", repoName)
+                .AddArgument("RepoOwner", repoOwner)
                 .Run();
             dotnetNewResult.EnsureExitCodeIsZero();
         }
     }
 
-    private static Task DotnetNewWebAppApi(string internalDir, string appName) =>
-        DotnetNewProject(Path.Combine(internalDir, $"XTI_{appName}AppApi"), "xtiwebappapi", appName);
+    private static Task DotnetNewWebAppApi(ToolOptions options, string appName) =>
+        DotnetNewProject(Path.Combine(getInternalDir(options), $"XTI_{appName}WebAppApi"), "xtiwebappapi", appName);
 
-    private static Task DotnetNewWebAppControllers(string internalDir, string appName) =>
-        DotnetNewProject(Path.Combine(internalDir, $"{appName}WebApp.ApiControllers"), "xtiwebappcontrollers", appName);
+    private static Task DotnetNewWebAppControllers(ToolOptions options, string appName) =>
+        DotnetNewProject(Path.Combine(getInternalDir(options), $"{appName}WebApp.ApiControllers"), "xtiwebappcontrollers", appName);
 
-    private static Task DotnetNewWebAppClient(string libDir, string appName) =>
-        DotnetNewProject(Path.Combine(libDir, $"XTI_{appName}AppClient"), "xtiwebappclient", appName);
+    private static Task DotnetNewWebAppClient(ToolOptions options, string appName) =>
+        DotnetNewProject(Path.Combine(getLibDir(options), $"XTI_{appName}AppClient"), "xtiwebappclient", appName);
 
-    private static Task DotnetNewWebAppExtensions(string internalDir, string appName) =>
-        DotnetNewProject(Path.Combine(internalDir, $"{appName}WebApp.Extensions"), "xtiwebappextensions", appName);
+    private static Task DotnetNewWebAppExtensions(ToolOptions options, string appName) =>
+        DotnetNewProject(Path.Combine(getInternalDir(options), $"{appName}WebApp.Extensions"), "xtiwebappextensions", appName);
 
-    private static Task DotnetNewApiGeneratorApp(string appsDir, string appName) =>
-        DotnetNewProject(Path.Combine(appsDir, $"{appName}ApiGeneratorApp"), "xtiapigeneratorapp", appName);
+    private static Task DotnetNewApiGeneratorApp(ToolOptions options, string appName) =>
+        DotnetNewProject
+        (
+            Path.Combine(getAppsDir(options), $"{appName}ApiGeneratorApp"), 
+            "xtiapigeneratorapp", 
+            appName,
+            new
+            {
+                AppType = getAppType(options)
+            }
+        );
 
-    private static Task DotnetNewSetupApp(string appsDir, string appName) =>
-        DotnetNewProject(Path.Combine(appsDir, $"{appName}SetupApp"), "xtisetupapp", appName);
+    private static Task DotnetNewSetupApp(ToolOptions options, string appName) =>
+        DotnetNewProject
+        (
+            Path.Combine(getAppsDir(options), $"{appName}SetupApp"), 
+            "xtisetupapp", 
+            appName,
+            new
+            {
+                AppType = getAppType(options)
+            }
+        );
 
-    private static Task DotnetNewWebApp(string appsDir, string appName) =>
-        DotnetNewProject(Path.Combine(appsDir, $"{appName}WebApp"), "xtiwebapp", appName);
+    private static Task DotnetNewWebApp(ToolOptions options, string appName) =>
+        DotnetNewProject
+        (
+            Path.Combine(getAppsDir(options), $"{appName}WebApp"), 
+            "xtiwebapp", 
+            appName,
+            new
+            {
+                RepoOwner = options.RepoOwner.ToLower(),
+                Domain = options.Domain
+            }
+        );
 
-    private static async Task DotnetNewProject(string projectDir, string templateName, string appName)
+    private static Task DotnetNewServiceAppApi(ToolOptions options, string appName) =>
+        DotnetNewProject(Path.Combine(getInternalDir(options), $"XTI_{appName}ServiceAppApi"), "xtiserviceappapi", appName);
+
+    private static Task DotnetNewServiceAppExtensions(ToolOptions options, string appName) =>
+        DotnetNewProject(Path.Combine(getInternalDir(options), $"{appName}ServiceApp.Extensions"), "xtiserviceappextensions", appName);
+
+    private static Task DotnetNewServiceApp(ToolOptions options, string appName) =>
+        DotnetNewProject(Path.Combine(getAppsDir(options), $"{appName}ServiceApp"), "xtiserviceapp", appName);
+
+    private static Task DotnetNewConsoleAppApi(ToolOptions options, string appName) =>
+        DotnetNewProject(Path.Combine(getInternalDir(options), $"XTI_{appName}ConsoleAppApi"), "xticonsoleappapi", appName);
+
+    private static Task DotnetNewConsoleAppExtensions(ToolOptions options, string appName) =>
+        DotnetNewProject(Path.Combine(getInternalDir(options), $"{appName}ConsoleApp.Extensions"), "xticonsoleappextensions", appName);
+
+    private static Task DotnetNewConsoleApp(ToolOptions options, string appName) =>
+        DotnetNewProject(Path.Combine(getAppsDir(options), $"{appName}ConsoleApp"), "xticonsoleapp", appName);
+
+    private static Task DotnetNewPackageExport(ToolOptions options, string appName) =>
+        DotnetNewProject(Path.Combine(getLibDir(options), appName), "xtipackageexport", appName);
+
+    private static async Task DotnetNewProject(string projectDir, string templateName, string appName, object? config = null)
     {
         CreateDirIfNotExists(projectDir);
         var projectFileName = $"{new DirectoryInfo(projectDir).Name}.csproj";
@@ -167,16 +409,27 @@ internal sealed class HostedService : IHostedService
         else
         {
             Console.WriteLine($"running dotnet new '{templateName}' '{projectDir}'");
-            var dotnetNewResult = await new WinProcess("dotnet")
+            var dotnetNewProcess = new WinProcess("dotnet")
                 .WriteOutputToConsole()
                 .SetWorkingDirectory(projectDir)
                 .AddArgument("new")
                 .AddArgument(templateName)
                 .UseArgumentNameDelimiter("--")
-                .AddArgument("AppName", appName)
-                .Run();
+                .AddArgument("AppName", appName);
+            if(config != null)
+            {
+                foreach (var prop in config.GetType().GetProperties())
+                {
+                    var propValue = (string?)prop.GetValue(config);
+                    if (propValue != null)
+                    {
+                        dotnetNewProcess.AddArgument(prop.Name, propValue);
+                    }
+                }
+            }
+            var dotnetNewResult = await dotnetNewProcess.Run();
             dotnetNewResult.EnsureExitCodeIsZero();
-            var slnDir = new DirectoryInfo(projectDir).Parent?.Parent?.FullName ?? "";
+            var slnDir = Environment.CurrentDirectory;
             Console.WriteLine($"adding project '{projectDir}' to '{slnDir}'");
             var dotnetAddResult = await new WinProcess("dotnet")
                 .WriteOutputToConsole()

@@ -2,12 +2,12 @@
 
 $script:xtiConfig = [PSCustomObject]@{
     RepoOwner = "JasonBenfield"
-    RepoName = "HubWebApp"
-    AppName = "Hub"
-    AppType = "WebApp"
+    RepoName = "XTI_Templates"
+    AppName = "XTI_Templates"
+    AppType = "Package"
 }
 
-if(Test-Path ".\xti.private.ps1"){
+if(Test-Path ".\xti.private.ps1") {
 . .\xti.Private.ps1
 }
 

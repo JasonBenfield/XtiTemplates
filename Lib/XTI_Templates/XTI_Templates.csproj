@@ -2,9 +2,6 @@
 
 	<PropertyGroup>
 		<PackageType>Template</PackageType>
-		<PackageVersion>1.0</PackageVersion>
-		<PackageId>XTI_Templates</PackageId>
-		<Title>XTI Templates</Title>
 		<Authors>Jason Benfield</Authors>
 		<Description>Templates for XTI apps.</Description>
 		<PackageTags>dotnet-new;templates;XTI</PackageTags>
@@ -12,6 +9,7 @@
 		<IncludeContentInPack>true</IncludeContentInPack>
 		<IncludeBuildOutput>false</IncludeBuildOutput>
 		<ContentTargetFolders>content</ContentTargetFolders>
+		<TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -19,10 +17,39 @@
 		<Content Include="WebAppControllers\**\*" Exclude="WebAppControllers\**\bin\**;WebAppControllers\**\obj\**" />
 		<Content Include="WebAppExtensions\**\*" Exclude="WebAppExtensions\**\bin\**;WebAppExtensions\**\obj\**" />
 		<Content Include="WebAppClient\**\*" Exclude="WebAppClient\**\bin\**;WebAppClient\**\obj\**" />
-		<Content Include="WebAppSolution\**\*" Exclude="WebAppSolution\**\bin\**;WebAppSolution\**\obj\**" />
 		<Content Include="WebApp\**\*" Exclude="WebApp\**\bin\**;WebApp\**\obj\**" />
 		<Content Include="ApiGeneratorApp\**\*" Exclude="ApiGeneratorApp\**\bin\**;ApiGeneratorApp\**\obj\**" />
 		<Content Include="SetupApp\**\*" Exclude="SetupApp\**\bin\**;SetupApp\**\obj\**" />
+		<Content Include="ServiceAppApi\**\*" Exclude="ServiceAppApi\**\bin\**;ServiceAppApi\**\obj\**" />
+		<Content Include="ServiceApp\**\*" Exclude="ServiceApp\**\bin\**;ServiceApp\**\obj\**" />
+		<Content Include="ServiceAppExtensions\**\*" Exclude="ServiceAppExtensions\**\bin\**;ServiceAppExtensions\**\obj\**" />
+		<Content Include="ConsoleAppApi\**\*" Exclude="ConsoleAppApi\**\bin\**;ConsoleAppApi\**\obj\**" />
+		<Content Include="ConsoleApp\**\*" Exclude="ConsoleApp\**\bin\**;ConsoleApp\**\obj\**" />
+		<Content Include="ConsoleAppExtensions\**\*" Exclude="ConsoleAppExtensions\**\bin\**;ConsoleAppExtensions\**\obj\**" />
+		<Content Include="PackageExport\**\*" Exclude="PackageExport\**\bin\**;PackageExport\**\obj\**" />
 		<Compile Remove="**\*" />
+		<TypeScriptCompile Remove="**\*" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="WebApp\Properties\PublishProfiles\Default.pubxml" />
+	  <None Remove="XtiSolution\.gitignore" />
+	  <None Remove="XtiSolution\xti.ps1" />
+	  <None Remove="XtiSolution\xtioverrides.ps1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="ApiGroup\.template.config\template.json" />
+	  <Content Include="ApiGroup\GroupName\AppNameAppApi.Partial.cs" />
+	  <Content Include="ApiGroup\GroupName\DoSomethingAction.cs" />
+	  <Content Include="ApiGroup\GroupName\GroupNameGroup.cs" />
+	  <Content Include="ApiGroup\GroupName\GroupNameGroupExtensions.cs" />
+	  <Content Include="XtiSolution\.gitignore" />
+	  <Content Include="XtiSolution\.template.config\template.json" />
+	  <Content Include="XtiSolution\xti.ps1" />
+	  <Content Include="XtiSolution\xtioverrides.ps1" />
+	</ItemGroup>
+
+	<Import Project="..\..\Common.Targets" />
+
 </Project>

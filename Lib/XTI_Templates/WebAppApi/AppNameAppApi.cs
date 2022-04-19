@@ -1,4 +1,4 @@
-﻿namespace XTI___APPNAME__AppApi;
+﻿namespace XTI___APPNAME__WebAppApi;
 
 public sealed partial class __APPNAME__AppApi : WebAppApiWrapper
 {

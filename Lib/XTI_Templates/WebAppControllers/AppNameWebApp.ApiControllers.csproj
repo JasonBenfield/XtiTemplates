@@ -12,7 +12,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\XTI___APPNAME__AppApi\XTI___APPNAME__AppApi.csproj" />
+		<ProjectReference Include="..\XTI___APPNAME__WebAppApi\XTI___APPNAME__WebAppApi.csproj" />
 	</ItemGroup>
 
 </Project>

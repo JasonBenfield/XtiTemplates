@@ -9,12 +9,11 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
-		<PackageReference Include="XTI_AppSetupApp.Extensions" Version="1.4.1-dev220106232958239" />
-		<PackageReference Include="XTI_Configuration.Extensions" Version="1.10.2" />
+		<PackageReference Include="XTI_AppSetupApp.Extensions" Version="1.4.7" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\Internal\XTI___APPNAME__AppApi\XTI___APPNAME__AppApi.csproj" />
+		<ProjectReference Include="..\..\Internal\XTI___APPNAME____APPTYPE__Api\XTI___APPNAME____APPTYPE__Api.csproj" />
 	</ItemGroup>
 
 </Project>

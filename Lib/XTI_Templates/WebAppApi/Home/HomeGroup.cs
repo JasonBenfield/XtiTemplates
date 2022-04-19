@@ -1,4 +1,4 @@
-﻿namespace XTI___APPNAME__AppApi.Home;
+﻿namespace XTI___APPNAME__WebAppApi.Home;
 
 public sealed class HomeGroup : AppApiGroupWrapper
 {
