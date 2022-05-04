@@ -9,11 +9,11 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="6.0.0" />
-		<PackageReference Include="XTI_HubAppClient.ServiceApp.Extensions" Version="1.4.7" />
+		<PackageReference Include="XTI_HubAppClient.ServiceApp.Extensions" Version="1.4.14" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\Internal\__APPNAME__ServiceApp.Extensions\__APPNAME__ServiceApp.Extensions.csproj" />
+		<ProjectReference Include="..\..\Internal\XTI___APPNAME__ServiceAppApi\XTI___APPNAME__ServiceAppApi.csproj" />
 	</ItemGroup>
 
 </Project>

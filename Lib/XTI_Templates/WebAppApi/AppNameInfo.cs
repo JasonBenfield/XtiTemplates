@@ -2,5 +2,5 @@
 
 public static class __APPNAME__Info
 {
-    public static readonly AppKey AppKey = new AppKey("__APPNAME__", AppType.Values.WebApp);
+    public static readonly AppKey AppKey = AppKey.WebApp("__APPNAME__");
 }

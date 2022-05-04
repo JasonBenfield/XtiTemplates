@@ -15,17 +15,14 @@
 	<ItemGroup>
 		<Content Include="WebAppApi\**\*" Exclude="WebAppApi\**\bin\**;WebAppApi\**\obj\**" />
 		<Content Include="WebAppControllers\**\*" Exclude="WebAppControllers\**\bin\**;WebAppControllers\**\obj\**" />
-		<Content Include="WebAppExtensions\**\*" Exclude="WebAppExtensions\**\bin\**;WebAppExtensions\**\obj\**" />
 		<Content Include="WebAppClient\**\*" Exclude="WebAppClient\**\bin\**;WebAppClient\**\obj\**" />
 		<Content Include="WebApp\**\*" Exclude="WebApp\**\bin\**;WebApp\**\obj\**" />
 		<Content Include="ApiGeneratorApp\**\*" Exclude="ApiGeneratorApp\**\bin\**;ApiGeneratorApp\**\obj\**" />
 		<Content Include="SetupApp\**\*" Exclude="SetupApp\**\bin\**;SetupApp\**\obj\**" />
 		<Content Include="ServiceAppApi\**\*" Exclude="ServiceAppApi\**\bin\**;ServiceAppApi\**\obj\**" />
 		<Content Include="ServiceApp\**\*" Exclude="ServiceApp\**\bin\**;ServiceApp\**\obj\**" />
-		<Content Include="ServiceAppExtensions\**\*" Exclude="ServiceAppExtensions\**\bin\**;ServiceAppExtensions\**\obj\**" />
 		<Content Include="ConsoleAppApi\**\*" Exclude="ConsoleAppApi\**\bin\**;ConsoleAppApi\**\obj\**" />
 		<Content Include="ConsoleApp\**\*" Exclude="ConsoleApp\**\bin\**;ConsoleApp\**\obj\**" />
-		<Content Include="ConsoleAppExtensions\**\*" Exclude="ConsoleAppExtensions\**\bin\**;ConsoleAppExtensions\**\obj\**" />
 		<Content Include="PackageExport\**\*" Exclude="PackageExport\**\bin\**;PackageExport\**\obj\**" />
 		<Compile Remove="**\*" />
 		<TypeScriptCompile Remove="**\*" />

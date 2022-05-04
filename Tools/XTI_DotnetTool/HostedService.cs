@@ -43,7 +43,7 @@ internal sealed class HostedService : IHostedService
                 if (string.IsNullOrWhiteSpace(srcDir))
                 {
                     var xtiFolder = scope.ServiceProvider.GetRequiredService<XtiFolder>();
-                    srcDir = Path.Combine(xtiFolder.FolderPath(), "src", options.RepoOwner, options.RepoName);
+                    srcDir = Path.Combine(xtiFolder.FolderPath(), "src");
                 }
                 var slnDir = Path.Combine(srcDir, options.RepoOwner, options.RepoName);
                 if (options.DeleteExisting && Directory.Exists(slnDir))
@@ -192,7 +192,6 @@ internal sealed class HostedService : IHostedService
     {
         await DotnetNewConsoleApp(options, appName);
         await DotnetNewConsoleAppApi(options, appName);
-        await DotnetNewConsoleAppExtensions(options, appName);
         await DotnetNewSetupApp(options, appName);
     }
 
@@ -200,7 +199,6 @@ internal sealed class HostedService : IHostedService
     {
         await DotnetNewServiceApp(options, appName);
         await DotnetNewServiceAppApi(options, appName);
-        await DotnetNewServiceAppExtensions(options, appName);
         await DotnetNewSetupApp(options, appName);
     }
 
@@ -210,7 +208,6 @@ internal sealed class HostedService : IHostedService
         await DotnetNewWebAppApi(options, appName);
         await DotnetNewWebAppControllers(options, appName);
         await DotnetNewWebAppClient(options, appName);
-        await DotnetNewWebAppExtensions(options, appName);
         await DotnetNewApiGeneratorApp(options, appName);
         await DotnetNewSetupApp(options, appName);
     }
@@ -221,17 +218,14 @@ internal sealed class HostedService : IHostedService
         "ApiGroup",
         "ConsoleApp",
         "ConsoleAppApi",
-        "ConsoleAppExtensions",
         "PackageExport",
         "ServiceApp",
         "ServiceAppApi",
-        "ServiceAppExtensions",
         "SetupApp",
         "WebApp",
         "WebAppApi",
         "WebAppClient",
         "WebAppControllers",
-        "WebAppExtensions",
         "XtiSolution"
     };
 
@@ -373,7 +367,9 @@ internal sealed class HostedService : IHostedService
             new
             {
                 RepoOwner = options.RepoOwner.ToLower(),
-                Domain = options.Domain
+                RepoName = options.RepoName,
+                Domain = options.Domain,
+                AppNameLower = appName.ToLower()
             }
         );
 

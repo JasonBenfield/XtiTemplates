@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "__APPNAME__ApiGeneratorApp": {
+    "__APPNAME__SetupApp": {
       "commandName": "Project",
       "commandLineArgs": "--VersionKey \"Current\"",
       "workingDirectory": "$(SolutionDir)",

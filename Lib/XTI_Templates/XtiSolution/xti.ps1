@@ -4,51 +4,6 @@ if(Test-Path ".\xti.private.ps1"){
 . .\xti.private.ps1
 }
 
-function Xti-NewVersion {
-    param(
-        [ValidateSet(“major”, "minor", "patch")]
-        $VersionType = "minor"
-    )
-    $Domain = Get-Domain -EnvName Production
-    $PsBoundParameters.Add("Domain", $Domain)
-    New-BaseXtiVersion @PsBoundParameters
-}
-
-function Xti-Issues {
-    BaseXti-Issues @PsBoundParameters
-}
-
-function Xti-NewIssue {
-    param(
-        [Parameter(Mandatory)]
-        [string] $IssueTitle,
-        [switch] $Start
-    )
-    New-BaseXtiIssue @PsBoundParameters
-}
-
-function Xti-StartIssue {
-    param(
-        [Parameter(Position=0)]
-        [long]$IssueNumber = 0
-    )
-    BaseXti-StartIssue @PsBoundParameters
-}
-
-function Xti-CompleteIssue {
-    param(
-    )
-    BaseXti-CompleteIssue @PsBoundParameters
-}
-
-function Xti-Build {
-    param(
-        [ValidateSet("Development", "Production", "Staging", "Test")]
-        $EnvName = "Development"
-    )
-    BaseXti-Build @PsBoundParameters
-}
-
 function Xti-Publish {
     param(
         [ValidateSet("Production", "Development")]

@@ -8,11 +8,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="XTI_HubAppClient.ConsoleApp.Extensions" Version="1.4.7" />
+		<PackageReference Include="XTI_HubAppClient.ConsoleApp.Extensions" Version="1.4.14" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\Internal\__APPNAME__ConsoleApp.Extensions\__APPNAME__ConsoleApp.Extensions.csproj" />
+		<ProjectReference Include="..\..\Internal\XTI___APPNAME__ConsoleAppApi\XTI___APPNAME__ConsoleAppApi.csproj" />
 	</ItemGroup>
 
 </Project>
