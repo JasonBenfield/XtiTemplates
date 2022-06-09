@@ -89,6 +89,18 @@ internal sealed class HostedService : IHostedService
                         await AddWebAppProjects(options, appName);
                         await NpmInstall(options);
                     }
+                    else if (appType == "WebService")
+                    {
+                        if (string.IsNullOrWhiteSpace(options.AppName)) { throw new ArgumentException("App Name is required."); }
+                        await AddWebServiceProjects(options, appName);
+                        await NpmInstall(options);
+                    }
+                    else if (appType == "WebPackage")
+                    {
+                        if (string.IsNullOrWhiteSpace(options.AppName)) { throw new ArgumentException("App Name is required."); }
+                        await DotnetNewWebPackage(options, appName);
+                        await NpmInstall(options);
+                    }
                     else if (appType == "ServiceApp")
                     {
                         if (string.IsNullOrWhiteSpace(options.AppName)) { throw new ArgumentException("App Name is required."); }
@@ -183,7 +195,7 @@ internal sealed class HostedService : IHostedService
 
     private static string getAppType(ToolOptions options)
     {
-        var appType = new[] { "", "WebApp", "ServiceApp", "ConsoleApp", "Package" }.FirstOrDefault(str => str.Equals(options.AppType.Replace(" ", "")));
+        var appType = new[] { "", "WebApp", "WebService", "ServiceApp", "ConsoleApp", "Package", "WebPackage" }.FirstOrDefault(str => str.Equals(options.AppType.Replace(" ", "")));
         if (appType == null) { throw new NotSupportedException($"App type '{options.AppType}' is not supported"); }
         return appType;
     }
@@ -212,6 +224,16 @@ internal sealed class HostedService : IHostedService
         await DotnetNewSetupApp(options, appName);
     }
 
+    private static async Task AddWebServiceProjects(ToolOptions options, string appName)
+    {
+        await DotnetNewWebService(options, appName);
+        await DotnetNewWebServiceApi(options, appName);
+        await DotnetNewWebServiceControllers(options, appName);
+        await DotnetNewWebServiceClient(options, appName);
+        await DotnetNewApiGeneratorApp(options, appName);
+        await DotnetNewSetupApp(options, appName);
+    }
+
     private static readonly string[] LocalTemplateNames = new[]
     {
         "ApiGeneratorApp",
@@ -226,6 +248,11 @@ internal sealed class HostedService : IHostedService
         "WebAppApi",
         "WebAppClient",
         "WebAppControllers",
+        "WebService",
+        "WebServiceApi",
+        "WebServiceClient",
+        "WebServiceControllers",
+        "WebPackage",
         "XtiSolution"
     };
 
@@ -331,8 +358,14 @@ internal sealed class HostedService : IHostedService
     private static Task DotnetNewWebAppClient(ToolOptions options, string appName) =>
         DotnetNewProject(Path.Combine(getLibDir(options), $"XTI_{appName}AppClient"), "xtiwebappclient", appName);
 
-    private static Task DotnetNewWebAppExtensions(ToolOptions options, string appName) =>
-        DotnetNewProject(Path.Combine(getInternalDir(options), $"{appName}WebApp.Extensions"), "xtiwebappextensions", appName);
+    private static Task DotnetNewWebServiceApi(ToolOptions options, string appName) =>
+        DotnetNewProject(Path.Combine(getInternalDir(options), $"XTI_{appName}WebServiceApi"), "xtiwebserviceapi", appName);
+
+    private static Task DotnetNewWebServiceControllers(ToolOptions options, string appName) =>
+        DotnetNewProject(Path.Combine(getInternalDir(options), $"{appName}WebService.ApiControllers"), "xtiwebservicecontrollers", appName);
+
+    private static Task DotnetNewWebServiceClient(ToolOptions options, string appName) =>
+        DotnetNewProject(Path.Combine(getLibDir(options), $"XTI_{appName}ServiceClient"), "xtiwebserviceclient", appName);
 
     private static Task DotnetNewApiGeneratorApp(ToolOptions options, string appName) =>
         DotnetNewProject
@@ -363,6 +396,36 @@ internal sealed class HostedService : IHostedService
         (
             Path.Combine(getAppsDir(options), $"{appName}WebApp"), 
             "xtiwebapp", 
+            appName,
+            new
+            {
+                RepoOwner = options.RepoOwner.ToLower(),
+                RepoName = options.RepoName,
+                Domain = options.Domain,
+                AppNameLower = appName.ToLower()
+            }
+        );
+
+    private static Task DotnetNewWebService(ToolOptions options, string appName) =>
+        DotnetNewProject
+        (
+            Path.Combine(getAppsDir(options), $"{appName}WebService"),
+            "xtiwebservice",
+            appName,
+            new
+            {
+                RepoOwner = options.RepoOwner.ToLower(),
+                RepoName = options.RepoName,
+                Domain = options.Domain,
+                AppNameLower = appName.ToLower()
+            }
+        );
+
+    private static Task DotnetNewWebPackage(ToolOptions options, string appName) =>
+        DotnetNewProject
+        (
+            Path.Combine(getAppsDir(options), $"{appName}WebPackage"),
+            "xtiwebpackage",
             appName,
             new
             {

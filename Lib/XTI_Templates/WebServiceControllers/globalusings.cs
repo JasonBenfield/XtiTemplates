@@ -1,0 +1,1 @@
+﻿global using XTI___APPNAME__WebAppApi;

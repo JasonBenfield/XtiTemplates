@@ -4,6 +4,8 @@ if(Test-Path ".\xti.private.ps1"){
 . .\xti.private.ps1
 }
 
+$BaseXtiPublish = ${Function:Xti-Publish}
+
 function Xti-Publish {
     param(
         [ValidateSet("Production", "Development")]
@@ -15,8 +17,10 @@ function Xti-Publish {
     $PsBoundParameters.Add("Domain", $Domain)
     $SiteName = Get-SiteName -EnvName $EnvName
     $PsBoundParameters.Add("SiteName", $SiteName)
-    BaseXti-Publish @PsBoundParameters
+    & $BaseXtiPublish @PsBoundParameters
 }
+
+$BaseXtiInstall = ${Function:Xti-Install}
 
 function Xti-Install {
     param(
@@ -29,5 +33,5 @@ function Xti-Install {
     $PsBoundParameters.Add("Domain", $Domain)
     $SiteName = Get-SiteName -EnvName $EnvName
     $PsBoundParameters.Add("SiteName", $SiteName)
-    BaseXti-Install @PsBoundParameters
+    & $BaseXtiInstall @PsBoundParameters
 }
