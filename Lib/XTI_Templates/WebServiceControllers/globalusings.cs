@@ -1,1 +1,1 @@
-﻿global using XTI___APPNAME__WebAppApi;
+﻿global using XTI___APPNAME__WebServiceApi;

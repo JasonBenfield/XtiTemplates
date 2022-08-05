@@ -375,7 +375,8 @@ internal sealed class HostedService : IHostedService
             appName,
             new
             {
-                AppType = getAppType(options)
+                AppType = getAppType(options),
+                ClientType = getAppType(options) == "WebApp" ? "App" : "Service" 
             }
         );
 
@@ -439,17 +440,11 @@ internal sealed class HostedService : IHostedService
     private static Task DotnetNewServiceAppApi(ToolOptions options, string appName) =>
         DotnetNewProject(Path.Combine(getInternalDir(options), $"XTI_{appName}ServiceAppApi"), "xtiserviceappapi", appName);
 
-    private static Task DotnetNewServiceAppExtensions(ToolOptions options, string appName) =>
-        DotnetNewProject(Path.Combine(getInternalDir(options), $"{appName}ServiceApp.Extensions"), "xtiserviceappextensions", appName);
-
     private static Task DotnetNewServiceApp(ToolOptions options, string appName) =>
         DotnetNewProject(Path.Combine(getAppsDir(options), $"{appName}ServiceApp"), "xtiserviceapp", appName);
 
     private static Task DotnetNewConsoleAppApi(ToolOptions options, string appName) =>
         DotnetNewProject(Path.Combine(getInternalDir(options), $"XTI_{appName}ConsoleAppApi"), "xticonsoleappapi", appName);
-
-    private static Task DotnetNewConsoleAppExtensions(ToolOptions options, string appName) =>
-        DotnetNewProject(Path.Combine(getInternalDir(options), $"{appName}ConsoleApp.Extensions"), "xticonsoleappextensions", appName);
 
     private static Task DotnetNewConsoleApp(ToolOptions options, string appName) =>
         DotnetNewProject(Path.Combine(getAppsDir(options), $"{appName}ConsoleApp"), "xticonsoleapp", appName);

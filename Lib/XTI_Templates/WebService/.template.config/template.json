@@ -2,9 +2,9 @@
   "$schema": "http://json.schemastore.org/template",
   "author": "Jason Benfield",
   "classifications": [ "Common", "Library" ],
-  "identity": "XTI_Templates.WebApp",
-  "name": "XTI_Templates.WebApp",
-  "shortName": "xtiwebapp",
+  "identity": "XTI_Templates.WebService",
+  "name": "XTI_Templates.WebService",
+  "shortName": "xtiwebservice",
   "tags": {
     "type": "project",
     "language": "en-US"

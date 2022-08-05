@@ -29,11 +29,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="WebApp\fork-ts-checker.config.js" />
 	  <None Remove="WebPackage\package.json" />
 	  <None Remove="WebPackage\Properties\launchSettings.json" />
 	  <None Remove="WebPackage\Properties\PublishProfiles\Default.pubxml" />
-	  <None Remove="WebPackage\Scripts\AppName\Api\.keep" />
-	  <None Remove="WebPackage\Scripts\AppName\tsconfig.json" />
+	  <None Remove="WebPackage\Scripts\Lib\Api\.keep" />
+	  <None Remove="WebPackage\Scripts\Lib\tsconfig.json" />
 	  <None Remove="WebPackage\Scripts\Internal\Apis.ts" />
 	  <None Remove="WebPackage\Scripts\Internal\AppNameTheme.ts" />
 	  <None Remove="WebPackage\Scripts\Internal\Home\MainPage.ts" />
@@ -52,8 +53,8 @@
 	  <None Remove="WebService\package.json" />
 	  <None Remove="WebService\Properties\launchSettings.json" />
 	  <None Remove="WebService\Properties\PublishProfiles\Default.pubxml" />
-	  <None Remove="WebService\Scripts\AppName\Api\.keep" />
-	  <None Remove="WebService\Scripts\AppName\tsconfig.json" />
+	  <None Remove="WebService\Scripts\Lib\Api\.keep" />
+	  <None Remove="WebService\Scripts\Lib\tsconfig.json" />
 	  <None Remove="WebService\Scripts\Internal\Apis.ts" />
 	  <None Remove="WebService\Scripts\Internal\AppNameTheme.ts" />
 	  <None Remove="WebService\Scripts\Internal\Home\MainPage.ts" />
@@ -87,8 +88,8 @@
 	  <Content Include="WebPackage\Program.cs" />
 	  <Content Include="WebPackage\Properties\launchSettings.json" />
 	  <Content Include="WebPackage\Properties\PublishProfiles\Default.pubxml" />
-	  <Content Include="WebPackage\Scripts\AppName\Api\.keep" />
-	  <Content Include="WebPackage\Scripts\AppName\tsconfig.json" />
+	  <Content Include="WebPackage\Scripts\Lib\Api\.keep" />
+	  <Content Include="WebPackage\Scripts\Lib\tsconfig.json" />
 	  <Content Include="WebPackage\Scripts\Internal\Apis.ts" />
 	  <Content Include="WebPackage\Scripts\Internal\AppNameTheme.ts" />
 	  <Content Include="WebPackage\Scripts\Internal\Home\MainPage.ts" />
@@ -115,8 +116,8 @@
 	  <Content Include="WebService\Program.cs" />
 	  <Content Include="WebService\Properties\launchSettings.json" />
 	  <Content Include="WebService\Properties\PublishProfiles\Default.pubxml" />
-	  <Content Include="WebService\Scripts\AppName\Api\.keep" />
-	  <Content Include="WebService\Scripts\AppName\tsconfig.json" />
+	  <Content Include="WebService\Scripts\Lib\Api\.keep" />
+	  <Content Include="WebService\Scripts\Lib\tsconfig.json" />
 	  <Content Include="WebService\Scripts\Internal\Apis.ts" />
 	  <Content Include="WebService\Scripts\Internal\AppNameTheme.ts" />
 	  <Content Include="WebService\Scripts\Internal\Home\MainPage.ts" />

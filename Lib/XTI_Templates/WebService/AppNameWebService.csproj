@@ -16,7 +16,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\Internal\__APPNAME__WebApp.ApiControllers\__APPNAME__WebApp.ApiControllers.csproj" />
+		<ProjectReference Include="..\..\Internal\__APPNAME__WebService.ApiControllers\__APPNAME__WebService.ApiControllers.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
