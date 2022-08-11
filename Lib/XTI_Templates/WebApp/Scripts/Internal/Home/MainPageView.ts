@@ -1,10 +1,12 @@
-﻿import { TextHeading1View } from '@jasonbenfield/sharedwebapp/Html/TextHeading1View';
-import { PageFrameView } from '@jasonbenfield/sharedwebapp/PageFrameView';
+﻿import { BasicPageView } from '@jasonbenfield/sharedwebapp/Views/BasicPageView';
+import { BasicTextComponentView } from '@jasonbenfield/sharedwebapp/Views/BasicTextComponentView';
+import { TextHeading1View } from '@jasonbenfield/sharedwebapp/Views/TextHeadings';
 
-export class MainPageView {
-    readonly heading: ITextComponentView;
+export class MainPageView extends BasicPageView {
+    readonly heading: BasicTextComponentView;
 
-    constructor(page: PageFrameView) {
-        this.heading = page.addContent(new TextHeading1View());
+    constructor() {
+        super();
+        this.heading = this.addView(TextHeading1View);
     }
 }

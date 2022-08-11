@@ -1,14 +1,13 @@
-﻿import { Startup } from '@jasonbenfield/sharedwebapp/Startup';
-import { PageFrameView } from '@jasonbenfield/sharedwebapp/PageFrameView';
+﻿import { BasicPage } from '@jasonbenfield/sharedwebapp/Components/BasicPage';
 import { MainPageView } from './MainPageView';
-import { TextBlock } from '@jasonbenfield/sharedwebapp/Html/TextBlock';
+import { TextComponent } from '@jasonbenfield/sharedwebapp/Components/TextComponent';
 
-class MainPage {
-    private readonly view: MainPageView;
+class MainPage extends BasicPage {
+    protected readonly view: MainPageView;
 
-    constructor(page: PageFrameView) {
-        this.view = new MainPageView(page);
-        new TextBlock('Home Page', this.view.heading);
+    constructor() {
+        super(new MainPageView());
+        new TextComponent(this.view.heading).setText('Home Page');
     }
 }
-new MainPage(new Startup().build());
+new MainPage();
