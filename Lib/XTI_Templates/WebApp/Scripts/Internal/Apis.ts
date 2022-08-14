@@ -1,6 +1,6 @@
 ﻿import { AppApiFactory } from "@jasonbenfield/sharedwebapp/Api/AppApiFactory";
 import { ModalErrorView } from "@jasonbenfield/sharedwebapp/Views/ModalError";
-import { __APPNAME__AppApi } from "../__APPNAME__/Api/__APPNAME__AppApi";
+import { __APPNAME__AppApi } from "../Lib/Api/__APPNAME__AppApi";
 
 export class Apis {
     private readonly apiFactory: AppApiFactory;

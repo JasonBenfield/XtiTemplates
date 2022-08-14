@@ -28,7 +28,7 @@ export class __APPNAME__Theme {
         deleteButton(button: ButtonCommandView) {
             return button
                 .configure(b => {
-                    b.icon.setName('times');
+                    b.icon.solidStyle('times');
                     b.icon.addCssFrom(new TextCss().context(ContextualClass.danger).cssClass());
                     b.useOutlineStyle(ContextualClass.secondary);
                     b.setText('');
@@ -73,7 +73,7 @@ export class __APPNAME__Theme {
                     b.icon.solidStyle('caret-left');
                     b.setText('Back');
                     b.setTitle('Back');
-                    b.useOutlineStyle(ContextualClass.light);
+                    b.setContext(ContextualClass.light);
                 });
         },
         cancelButton(button: ButtonCommandView) {

@@ -73,7 +73,6 @@
 	  <None Remove="WebApp\Properties\PublishProfiles\Default.pubxml" />
 	  <None Remove="XtiSolution\.gitignore" />
 	  <None Remove="XtiSolution\xti.ps1" />
-	  <None Remove="XtiSolution\xtioverrides.ps1" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -147,7 +146,6 @@
 	  <Content Include="XtiSolution\.gitignore" />
 	  <Content Include="XtiSolution\.template.config\template.json" />
 	  <Content Include="XtiSolution\xti.ps1" />
-	  <Content Include="XtiSolution\xtioverrides.ps1" />
 	</ItemGroup>
 
 </Project>
