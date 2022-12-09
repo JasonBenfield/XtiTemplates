@@ -1,6 +1,6 @@
 ﻿namespace XTI___APPNAME____APPTYPE__Api.__GROUPNAME__;
 
-public sealed class DoSomethingAction : AppAction<EmptyRequest, EmptyActionResult>
+internal sealed class DoSomethingAction : AppAction<EmptyRequest, EmptyActionResult>
 {
     public async Task<EmptyActionResult> Execute(EmptyRequest model, CancellationToken ct)
     {

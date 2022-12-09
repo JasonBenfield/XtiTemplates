@@ -1,7 +1,7 @@
 ﻿import { AppApiFactory } from "@jasonbenfield/sharedwebapp/Api/AppApiFactory";
 import { ModalErrorComponent } from "@jasonbenfield/sharedwebapp/Error/ModalErrorComponent";
 import { ModalErrorComponentView } from "@jasonbenfield/sharedwebapp/Error/ModalErrorComponentView";
-import { __APPNAME__AppApi } from "../__APPNAME__/Api/__APPNAME__AppApi";
+import { __APPNAME__AppApi } from "../Lib/Api/__APPNAME__AppApi";
 
 export class Apis {
     private readonly modalError: ModalErrorComponent;

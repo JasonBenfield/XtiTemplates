@@ -1,7 +1,6 @@
 ﻿const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const entry = {
-    user: './Scripts/Internal/User/Start/MainPage.ts',
     accessDenied: './Scripts/Internal/User/AccessDenied/MainPage.ts',
     error: './Scripts/Internal/User/Error/MainPage.ts',
     home: './Scripts/Internal/Home/MainPage.ts'

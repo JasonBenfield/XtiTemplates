@@ -11,7 +11,7 @@ export class __APPNAME__Theme {
         deleteButton() {
             return new ButtonCommandItem()
                 .configure(b => {
-                    b.icon.setName('times');
+                    b.icon.solidStyle('times');
                     b.icon.addCssFrom(new TextCss().context(ContextualClass.danger).cssClass());
                     b.useOutlineStyle();
                     b.setText('');
@@ -24,7 +24,7 @@ export class __APPNAME__Theme {
         editButton() {
             return new ButtonCommandItem()
                 .configure(b => {
-                    b.icon.setName('edit');
+                    b.icon.solidStyle('edit');
                     b.setContext(ContextualClass.primary);
                     b.useOutlineStyle();
                     b.setText('Edit');
@@ -34,7 +34,7 @@ export class __APPNAME__Theme {
         addButton() {
             return new ButtonCommandItem()
                 .configure(b => {
-                    b.icon.setName('plus');
+                    b.icon.solidStyle('plus');
                     b.setContext(ContextualClass.primary);
                     b.useOutlineStyle();
                     b.setText('Add');
@@ -49,22 +49,22 @@ export class __APPNAME__Theme {
                 .configure(t => {
                     t.setBackgroundContext(ContextualClass.secondary);
                     t.setPadding(PaddingCss.xs(3));
+                    t.addCssName('bg-opacity-25');
                 });
         },
         backButton() {
             return new ButtonCommandItem()
                 .configure(b => {
-                    b.icon.setName('caret-left');
+                    b.icon.solidStyle('caret-left');
                     b.setText('Back');
                     b.setTitle('Back');
-                    b.setContext(ContextualClass.light);
-                    b.useOutlineStyle();
+                    b.useOutlineStyle(ContextualClass.light);
                 });
         },
         cancelButton() {
             return new ButtonCommandItem()
                 .configure(b => {
-                    b.icon.setName('times');
+                    b.icon.solidStyle('times');
                     b.setText('Cancel');
                     b.setTitle('Cancel');
                     b.setContext(ContextualClass.danger);
@@ -73,7 +73,7 @@ export class __APPNAME__Theme {
         saveButton() {
             return new ButtonCommandItem()
                 .configure(b => {
-                    b.icon.setName('check');
+                    b.icon.solidStyle('check');
                     b.setText('Save');
                     b.setTitle('Save');
                     b.setContext(ContextualClass.primary);
