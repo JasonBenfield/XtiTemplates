@@ -1,17 +1,14 @@
-﻿namespace XTI___APPNAME__AppApi.Home;
+﻿namespace XTI___APPNAME__WebAppApi.Home;
 
 public sealed class IndexAction : AppAction<EmptyRequest, WebViewResult>
 {
-    private readonly IPageContext pageContext;
+    private readonly WebViewResultFactory viewFactory;
 
-    public IndexAction(IPageContext pageContext)
+    public IndexAction(WebViewResultFactory viewFactory)
     {
-        this.pageContext = pageContext;
+        this.viewFactory = viewFactory;
     }
 
-    public Task<WebViewResult> Execute(EmptyRequest model)
-    {
-        var action = new TitledViewAppAction<EmptyRequest>(pageContext, "Index", "__APPNAME__");
-        return action.Execute(model);
-    }
+    public Task<WebViewResult> Execute(EmptyRequest model, CancellationToken ct) =>
+        Task.FromResult(viewFactory.Default("home", "Index"));
 }

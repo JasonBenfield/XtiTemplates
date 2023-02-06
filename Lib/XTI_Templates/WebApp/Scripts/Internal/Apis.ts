@@ -1,17 +1,15 @@
 ﻿import { AppApiFactory } from "@jasonbenfield/sharedwebapp/Api/AppApiFactory";
-import { ModalErrorComponent } from "@jasonbenfield/sharedwebapp/Error/ModalErrorComponent";
-import { ModalErrorComponentView } from "@jasonbenfield/sharedwebapp/Error/ModalErrorComponentView";
-import { __APPNAME__AppApi } from "./Api/__APPNAME__AppApi";
+import { ModalErrorView } from "@jasonbenfield/sharedwebapp/Views/ModalError";
+import { __APPNAME__AppApi } from "../Lib/Api/__APPNAME__AppApi";
 
 export class Apis {
-    private readonly modalError: ModalErrorComponent;
+    private readonly apiFactory: AppApiFactory;
 
-    constructor(modalError: ModalErrorComponentView) {
-        this.modalError = new ModalErrorComponent(modalError);
+    constructor(modalError: ModalErrorView) {
+        this.apiFactory = new AppApiFactory(modalError)
     }
 
     __APPNAME__() {
-        let apiFactory = new AppApiFactory(this.modalError)
-        return apiFactory.api(__APPNAME__AppApi);
+        return this.apiFactory.api(__APPNAME__AppApi);
     }
 }

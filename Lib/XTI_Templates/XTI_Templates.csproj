@@ -2,9 +2,6 @@
 
 	<PropertyGroup>
 		<PackageType>Template</PackageType>
-		<PackageVersion>1.0</PackageVersion>
-		<PackageId>XTI_Templates</PackageId>
-		<Title>XTI Templates</Title>
 		<Authors>Jason Benfield</Authors>
 		<Description>Templates for XTI apps.</Description>
 		<PackageTags>dotnet-new;templates;XTI</PackageTags>
@@ -12,17 +9,91 @@
 		<IncludeContentInPack>true</IncludeContentInPack>
 		<IncludeBuildOutput>false</IncludeBuildOutput>
 		<ContentTargetFolders>content</ContentTargetFolders>
+		<TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<Content Include="WebAppApi\**\*" Exclude="WebAppApi\**\bin\**;WebAppApi\**\obj\**" />
 		<Content Include="WebAppControllers\**\*" Exclude="WebAppControllers\**\bin\**;WebAppControllers\**\obj\**" />
-		<Content Include="WebAppExtensions\**\*" Exclude="WebAppExtensions\**\bin\**;WebAppExtensions\**\obj\**" />
 		<Content Include="WebAppClient\**\*" Exclude="WebAppClient\**\bin\**;WebAppClient\**\obj\**" />
-		<Content Include="WebAppSolution\**\*" Exclude="WebAppSolution\**\bin\**;WebAppSolution\**\obj\**" />
 		<Content Include="WebApp\**\*" Exclude="WebApp\**\bin\**;WebApp\**\obj\**" />
 		<Content Include="ApiGeneratorApp\**\*" Exclude="ApiGeneratorApp\**\bin\**;ApiGeneratorApp\**\obj\**" />
 		<Content Include="SetupApp\**\*" Exclude="SetupApp\**\bin\**;SetupApp\**\obj\**" />
+		<Content Include="ServiceAppApi\**\*" Exclude="ServiceAppApi\**\bin\**;ServiceAppApi\**\obj\**" />
+		<Content Include="ServiceApp\**\*" Exclude="ServiceApp\**\bin\**;ServiceApp\**\obj\**" />
+		<Content Include="ConsoleAppApi\**\*" Exclude="ConsoleAppApi\**\bin\**;ConsoleAppApi\**\obj\**" />
+		<Content Include="ConsoleApp\**\*" Exclude="ConsoleApp\**\bin\**;ConsoleApp\**\obj\**" />
+		<Content Include="PackageExport\**\*" Exclude="PackageExport\**\bin\**;PackageExport\**\obj\**" />
 		<Compile Remove="**\*" />
+		<TypeScriptCompile Remove="**\*" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="ConsoleApp\Properties\PublishProfiles\Default.pubxml" />
+	  <None Remove="ServiceApp\Properties\PublishProfiles\Default.pubxml" />
+	  <None Remove="SetupApp\Properties\PublishProfiles\Default.pubxml" />
+	  <None Remove="WebApp\fork-ts-checker.config.js" />
+	  <None Remove="WebApp\Scripts\Internal\AppNamePage.ts" />
+	  <None Remove="WebApp\Scripts\Internal\AppNamePageView.ts" />
+	  <None Remove="WebPackage\package.json" />
+	  <None Remove="WebPackage\Properties\launchSettings.json" />
+	  <None Remove="WebPackage\Properties\PublishProfiles\Default.pubxml" />
+	  <None Remove="WebPackage\Scripts\Lib\Api\.keep" />
+	  <None Remove="WebPackage\Scripts\Lib\tsconfig.json" />
+	  <None Remove="WebPackage\Scripts\Internal\Apis.ts" />
+	  <None Remove="WebPackage\Scripts\Internal\AppNameTheme.ts" />
+	  <None Remove="WebPackage\Scripts\Internal\Home\MainPage.ts" />
+	  <None Remove="WebPackage\Scripts\Internal\Home\MainPageView.ts" />
+	  <None Remove="WebPackage\Scripts\Internal\tsconfig.json" />
+	  <None Remove="WebPackage\Scripts\Internal\User\AccessDenied\MainPage.ts" />
+	  <None Remove="WebPackage\Scripts\Internal\User\Error\MainPage.ts" />
+	  <None Remove="WebPackage\Views\Shared\_Layout.cshtml" />
+	  <None Remove="WebPackage\Views\_ViewImports.cshtml" />
+	  <None Remove="WebPackage\Views\_ViewStart.cshtml" />
+	  <None Remove="WebPackage\webpack.config.js" />
+	  <None Remove="WebPackage\wwwroot\.keep" />
+	  <None Remove="WebApp\Properties\PublishProfiles\Default.pubxml" />
+	  <None Remove="XtiSolution\.gitignore" />
+	  <None Remove="XtiSolution\xti.ps1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Include="Tests\TestExtensions.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="ApiGroup\.template.config\template.json" />
+	  <Content Include="ApiGroup\GroupName\AppNameAppApi.Partial.cs" />
+	  <Content Include="ApiGroup\GroupName\DoSomethingAction.cs" />
+	  <Content Include="ApiGroup\GroupName\GroupNameGroup.cs" />
+	  <Content Include="ApiGroup\GroupName\GroupNameGroupExtensions.cs" />
+	  <Content Include="Tests\.template.config\template.json" />
+	  <Content Include="Tests\AppNameActionTester.cs" />
+	  <Content Include="Tests\AppNameTestHost.cs" />
+	  <Content Include="Tests\AppNameTestTypeTests.csproj" />
+	  <Content Include="WebPackage\.template.config\template.json" />
+	  <Content Include="WebPackage\AppNameWebPackage.csproj" />
+	  <Content Include="WebPackage\package.json" />
+	  <Content Include="WebPackage\Program.cs" />
+	  <Content Include="WebPackage\Properties\launchSettings.json" />
+	  <Content Include="WebPackage\Properties\PublishProfiles\Default.pubxml" />
+	  <Content Include="WebPackage\Scripts\Lib\Api\.keep" />
+	  <Content Include="WebPackage\Scripts\Lib\tsconfig.json" />
+	  <Content Include="WebPackage\Scripts\Internal\Apis.ts" />
+	  <Content Include="WebPackage\Scripts\Internal\AppNameTheme.ts" />
+	  <Content Include="WebPackage\Scripts\Internal\Home\MainPage.ts" />
+	  <Content Include="WebPackage\Scripts\Internal\Home\MainPageView.ts" />
+	  <Content Include="WebPackage\Scripts\Internal\tsconfig.json" />
+	  <Content Include="WebPackage\Scripts\Internal\User\AccessDenied\MainPage.ts" />
+	  <Content Include="WebPackage\Scripts\Internal\User\Error\MainPage.ts" />
+	  <Content Include="WebPackage\Views\Shared\_Layout.cshtml" />
+	  <Content Include="WebPackage\Views\_ViewImports.cshtml" />
+	  <Content Include="WebPackage\Views\_ViewStart.cshtml" />
+	  <Content Include="WebPackage\webpack.config.js" />
+	  <Content Include="WebPackage\wwwroot\.keep" />
+	  <Content Include="XtiSolution\.gitignore" />
+	  <Content Include="XtiSolution\.template.config\template.json" />
+	  <Content Include="XtiSolution\xti.ps1" />
+	</ItemGroup>
+
 </Project>

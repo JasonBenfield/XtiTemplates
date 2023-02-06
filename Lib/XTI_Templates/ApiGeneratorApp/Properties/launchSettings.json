@@ -3,7 +3,7 @@
     "__APPNAME__ApiGeneratorApp": {
       "commandName": "Project",
       "commandLineArgs": "--Output:DefaultVersion \"Current\"",
-      "workingDirectory": "$(SolutionDir)",
+      "workingDirectory": "$(SolutionDir)__APPNAME____APPTYPE__",
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "Development"
       }

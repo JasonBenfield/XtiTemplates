@@ -18,6 +18,38 @@
       "defaultValue": "TheApp",
       "FileRename": "AppName",
       "replaces": "__APPNAME__"
+    },
+    "AppNameLower": {
+      "type": "parameter",
+      "datatype": "string",
+      "isRequired": true,
+      "defaultValue": "TheApp",
+      "FileRename": "AppNameLower",
+      "replaces": "__APPNAMELOWER__"
+    },
+    "RepoOwner": {
+      "type": "parameter",
+      "datatype": "string",
+      "isRequired": true,
+      "defaultValue": "TheRepoOwner",
+      "FileRename": "RepoOwner",
+      "replaces": "__REPOOWNER__"
+    },
+    "RepoName": {
+      "type": "parameter",
+      "datatype": "string",
+      "isRequired": true,
+      "defaultValue": "TheRepoName",
+      "FileRename": "Domain",
+      "replaces": "__REPONAME__"
+    },
+    "Domain": {
+      "type": "parameter",
+      "datatype": "string",
+      "isRequired": true,
+      "defaultValue": "development.guinevere.com",
+      "FileRename": "Domain",
+      "replaces": "__DOMAIN__"
     }
   }
 }

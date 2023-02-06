@@ -1,14 +1,24 @@
 ﻿const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const entry = {
-    user: './Scripts/Internal/User/MainPage.ts',
+    accessDenied: './Scripts/Internal/User/AccessDenied/MainPage.ts',
+    error: './Scripts/Internal/User/Error/MainPage.ts',
     home: './Scripts/Internal/Home/MainPage.ts'
 };
 const exportModule = {
     rules: [
         {
             test: /\.tsx?$/,
-            use: 'ts-loader',
+            use: [
+                {
+                    loader: 'ts-loader',
+                    // add transpileOnly option if you use ts-loader < 9.3.0
+                    options: {
+                        transpileOnly: true
+                    }
+                }
+            ],
             exclude: /node_modules/
         },
         {
@@ -66,6 +76,7 @@ const exportModule = {
 const outputFilename = '[name].js';
 
 const resolve = {
+    extensions: [".ts", ".tsx", ".js"],
     alias: {
     }
 };
@@ -73,7 +84,8 @@ const plugins = [
     new MiniCssExtractPlugin({
         filename: '[name].css',
         chunkFilename: '[id].css',
-    })
+    }),
+    new ForkTsCheckerWebpackPlugin()
 ];
 module.exports = [
     {

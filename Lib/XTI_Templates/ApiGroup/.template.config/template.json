@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Jason Benfield",
+  "classifications": [ "Common", "Library" ],
+  "identity": "XTI_Templates.ApiGroup",
+  "name": "XTI_Templates.ApiGroup",
+  "shortName": "xtiapigroup",
+  "tags": {
+    "type": "project",
+    "language": "en-US"
+  },
+  "symbols": {
+    "AppName": {
+      "type": "parameter",
+      "datatype": "string",
+      "isRequired": true,
+      "defaultValue": "TheApp",
+      "FileRename": "AppName",
+      "replaces": "__APPNAME__"
+    },
+    "AppType": {
+      "type": "parameter",
+      "datatype": "string",
+      "isRequired": true,
+      "defaultValue": "TheAppType",
+      "FileRename": "AppType",
+      "replaces": "__APPTYPE__"
+    },
+    "GroupName": {
+      "type": "parameter",
+      "datatype": "string",
+      "isRequired": true,
+      "defaultValue": "TheGroupName",
+      "FileRename": "GroupName",
+      "replaces": "__GROUPNAME__"
+    }
+  }
+}

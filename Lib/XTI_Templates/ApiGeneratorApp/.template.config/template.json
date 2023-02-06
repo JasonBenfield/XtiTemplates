@@ -17,6 +17,22 @@
       "defaultValue": "TheApp",
       "FileRename": "AppName",
       "replaces": "__APPNAME__"
+    },
+    "AppType": {
+      "type": "parameter",
+      "datatype": "string",
+      "isRequired": true,
+      "defaultValue": "TheAppType",
+      "FileRename": "AppType",
+      "replaces": "__APPTYPE__"
+    },
+    "ClientType": {
+      "type": "parameter",
+      "datatype": "string",
+      "isRequired": true,
+      "defaultValue": "TheClientType",
+      "FileRename": "ClientType",
+      "replaces": "__CLIENTTYPE__"
     }
   }
 }

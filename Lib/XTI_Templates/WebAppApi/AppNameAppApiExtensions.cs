@@ -1,4 +1,4 @@
-﻿namespace XTI___APPNAME__AppApi;
+﻿namespace XTI___APPNAME__WebAppApi;
 
 public static class __APPNAME__AppApiExtensions
 {

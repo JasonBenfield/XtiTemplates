@@ -2,17 +2,17 @@
 using Microsoft.Extensions.Hosting;
 using XTI_ApiGeneratorApp.Extensions;
 using XTI_App.Api;
-using XTI_Configuration.Extensions;
-using XTI___APPNAME__AppApi;
+using XTI_Core.Extensions;
+using XTI___APPNAME____APPTYPE__Api;
 
 await Host.CreateDefaultBuilder(args)
     .ConfigureAppConfiguration((hostingContext, config) =>
     {
-        config.UseXtiConfiguration(hostingContext.HostingEnvironment, args);
+        config.UseXtiConfiguration(hostingContext.HostingEnvironment, "", "", args);
     })
     .ConfigureServices((hostContext, services) =>
     {
-        services.AddApiGenerator(hostContext.Configuration);
+        services.AddApiGenerator();
         services.AddScoped<AppApiFactory, __APPNAME__AppApiFactory>();
         services.AddHostedService<ApiGeneratorHostedService>();
     })
