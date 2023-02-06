@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using XTI_Core;
 
-namespace __APPNAME____TESTTYPE__Tests;
+namespace __APPNAME____APPTYPE____TESTTYPE__Tests;
 
 internal static class TestExtensions
 {

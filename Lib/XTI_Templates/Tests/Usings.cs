@@ -1,0 +1,1 @@
+﻿global using XTI___APPNAME____APPTYPE__Api;

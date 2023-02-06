@@ -6,7 +6,7 @@ using XTI_App.Api;
 using XTI_App.Fakes;
 using XTI___APPNAME____APPTYPE__Api;
 
-namespace __APPNAME____TESTTYPE__Tests;
+namespace __APPNAME____APPTYPE____TESTTYPE__Tests;
 
 internal static class __APPNAME__ActionTester
 {

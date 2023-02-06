@@ -10,7 +10,7 @@ using XTI_Core.Fakes;
 using XTI___APPNAME____APPTYPE__Api;
 using XTI_WebApp.Fakes;
 
-namespace __APPNAME____TESTTYPE__Tests;
+namespace __APPNAME____APPTYPE____TESTTYPE__Tests;
 
 internal sealed class __APPNAME__TestHost
 {
