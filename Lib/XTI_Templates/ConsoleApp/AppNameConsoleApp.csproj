@@ -8,7 +8,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="XTI_HubAppClient.ConsoleApp.Extensions" Version="1.4.36" />
+		<PackageReference Include="XTI_HubAppClient.ConsoleApp.Extensions" Version="1.4.37" />
 	</ItemGroup>
 
 	<ItemGroup>

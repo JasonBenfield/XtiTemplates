@@ -8,12 +8,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.7.4">
+		<PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.9.5">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="XTI_HubAppClient.WebApp.Extensions" Version="1.4.36" />
-		<PackageReference Include="XTI_WebApp.RCL" Version="1.8.33" />
+		<PackageReference Include="XTI_HubAppClient.WebApp.Extensions" Version="1.4.37" />
+		<PackageReference Include="XTI_WebApp.RCL" Version="1.8.34" />
 	</ItemGroup>
 
 	<ItemGroup>

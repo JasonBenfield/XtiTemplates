@@ -1,8 +1,6 @@
 {
   "compileOnSave": true,
   "compilerOptions": {
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
     "lib": [ "es2018", "dom" ],
     "module": "commonjs",
     "noImplicitAny": false,

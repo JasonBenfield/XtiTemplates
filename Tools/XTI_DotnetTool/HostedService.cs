@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using System.Dynamic;
 using XTI_Core;
 using XTI_Git;
 using XTI_GitHub;
@@ -61,6 +62,10 @@ internal sealed class HostedService : IHostedService
                 if (options.Command.Equals("apigroup", StringComparison.InvariantCultureIgnoreCase))
                 {
                     await DotnetNewApiGroup(options, appName);
+                }
+                else if (options.Command.Equals("tests", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    await DotnetTests(options);
                 }
                 else
                 {
@@ -177,6 +182,11 @@ internal sealed class HostedService : IHostedService
         return Path.Combine(Environment.CurrentDirectory, getFullAppName(options), "Apps");
     }
 
+    private static string getTestsDir(ToolOptions options)
+    {
+        return Path.Combine(Environment.CurrentDirectory, getFullAppName(options), "Tests");
+    }
+
     private static string getInternalDir(ToolOptions options)
     {
         return Path.Combine(Environment.CurrentDirectory, getFullAppName(options), "Internal");
@@ -233,7 +243,8 @@ internal sealed class HostedService : IHostedService
         "WebAppClient",
         "WebAppControllers",
         "WebPackage",
-        "XtiSolution"
+        "XtiSolution",
+        "Tests"
     };
 
     private static async Task DotnetUninstallTemplatesLocally()
@@ -339,21 +350,21 @@ internal sealed class HostedService : IHostedService
     private static Task DotnetNewApiGeneratorApp(ToolOptions options, string appName) =>
         DotnetNewProject
         (
-            Path.Combine(getAppsDir(options), $"{appName}ApiGeneratorApp"), 
-            "xtiapigeneratorapp", 
+            Path.Combine(getAppsDir(options), $"{appName}ApiGeneratorApp"),
+            "xtiapigeneratorapp",
             appName,
             new
             {
                 AppType = getAppType(options),
-                ClientType = getAppType(options) == "WebApp" ? "App" : "Service" 
+                ClientType = getAppType(options) == "WebApp" ? "App" : "Service"
             }
         );
 
     private static Task DotnetNewSetupApp(ToolOptions options, string appName) =>
         DotnetNewProject
         (
-            Path.Combine(getAppsDir(options), $"{appName}SetupApp"), 
-            "xtisetupapp", 
+            Path.Combine(getAppsDir(options), $"{appName}SetupApp"),
+            "xtisetupapp",
             appName,
             new
             {
@@ -364,8 +375,8 @@ internal sealed class HostedService : IHostedService
     private static Task DotnetNewWebApp(ToolOptions options, string appName) =>
         DotnetNewProject
         (
-            Path.Combine(getAppsDir(options), $"{appName}WebApp"), 
-            "xtiwebapp", 
+            Path.Combine(getAppsDir(options), $"{appName}WebApp"),
+            "xtiwebapp",
             appName,
             new
             {
@@ -390,6 +401,23 @@ internal sealed class HostedService : IHostedService
                 AppNameLower = appName.ToLower()
             }
         );
+
+    private static Task DotnetTests(ToolOptions options)
+    {
+        var appName = getAppName(options);
+        var path = Path.Combine(getTestsDir(options), $"{appName}{options.TestType}Test5s");
+        return DotnetNewProject
+        (
+            path,
+            "xtitests",
+            appName,
+            new
+            {
+                AppType = getAppType(options),
+                options.TestType
+            }
+        );
+    }
 
     private static Task DotnetNewServiceAppApi(ToolOptions options, string appName) =>
         DotnetNewProject(Path.Combine(getInternalDir(options), $"XTI_{appName}ServiceAppApi"), "xtiserviceappapi", appName);
@@ -424,12 +452,12 @@ internal sealed class HostedService : IHostedService
                 .AddArgument(templateName)
                 .UseArgumentNameDelimiter("--")
                 .AddArgument("AppName", appName);
-            if(config != null)
+            if (config != null)
             {
                 foreach (var prop in config.GetType().GetProperties())
                 {
                     var propValue = (string?)prop.GetValue(config);
-                    if (propValue != null)
+                    if (!string.IsNullOrWhiteSpace(propValue))
                     {
                         dotnetNewProcess.AddArgument(prop.Name, propValue);
                     }

@@ -7,7 +7,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="XTI_ConsoleApp" Version="1.8.33" />
+		<PackageReference Include="XTI_ConsoleApp" Version="1.8.34" />
 	</ItemGroup>
 
 </Project>

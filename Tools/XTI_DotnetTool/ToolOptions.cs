@@ -7,6 +7,7 @@ internal sealed class ToolOptions
     public string RepoName { get; set; } = "";
     public string AppName { get; set; } = "";
     public string AppType { get; set; } = "";
+    public string TestType { get; set; } = "";
     public string GroupName { get; set; } = "";
     public bool DeleteExisting { get; set; }
     public bool InstallTemplatesLocally { get; set; }

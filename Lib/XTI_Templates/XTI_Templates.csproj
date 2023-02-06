@@ -29,7 +29,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="ConsoleApp\Properties\PublishProfiles\Default.pubxml" />
+	  <None Remove="ServiceApp\Properties\PublishProfiles\Default.pubxml" />
+	  <None Remove="SetupApp\Properties\PublishProfiles\Default.pubxml" />
 	  <None Remove="WebApp\fork-ts-checker.config.js" />
+	  <None Remove="WebApp\Scripts\Internal\AppNamePage.ts" />
+	  <None Remove="WebApp\Scripts\Internal\AppNamePageView.ts" />
 	  <None Remove="WebPackage\package.json" />
 	  <None Remove="WebPackage\Properties\launchSettings.json" />
 	  <None Remove="WebPackage\Properties\PublishProfiles\Default.pubxml" />
@@ -53,11 +58,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Include="Tests\TestExtensions.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Content Include="ApiGroup\.template.config\template.json" />
 	  <Content Include="ApiGroup\GroupName\AppNameAppApi.Partial.cs" />
 	  <Content Include="ApiGroup\GroupName\DoSomethingAction.cs" />
 	  <Content Include="ApiGroup\GroupName\GroupNameGroup.cs" />
 	  <Content Include="ApiGroup\GroupName\GroupNameGroupExtensions.cs" />
+	  <Content Include="Tests\.template.config\template.json" />
+	  <Content Include="Tests\AppNameActionTester.cs" />
+	  <Content Include="Tests\AppNameTestHost.cs" />
+	  <Content Include="Tests\AppNameTestTypeTests.csproj" />
 	  <Content Include="WebPackage\.template.config\template.json" />
 	  <Content Include="WebPackage\AppNameWebPackage.csproj" />
 	  <Content Include="WebPackage\package.json" />
