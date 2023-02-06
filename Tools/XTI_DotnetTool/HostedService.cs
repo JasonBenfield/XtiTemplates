@@ -405,7 +405,8 @@ internal sealed class HostedService : IHostedService
     private static Task DotnetTests(ToolOptions options)
     {
         var appName = getAppName(options);
-        var path = Path.Combine(getTestsDir(options), $"{appName}{options.TestType}Test5s");
+        var appType = getAppType(options);
+        var path = Path.Combine(getTestsDir(options), $"{appName}{appType}{options.TestType}Tests");
         return DotnetNewProject
         (
             path,
@@ -413,7 +414,7 @@ internal sealed class HostedService : IHostedService
             appName,
             new
             {
-                AppType = getAppType(options),
+                AppType = appType,
                 options.TestType
             }
         );
