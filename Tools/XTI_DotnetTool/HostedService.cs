@@ -70,7 +70,12 @@ internal sealed class HostedService : IHostedService
                 else
                 {
                     var gitHubFactory = sp.GetRequiredService<IGitHubFactory>();
-                    var gitHubRepo = await gitHubFactory.CreateNewGitHubRepositoryIfNotExists(options.RepoOwner, options.RepoName);
+                    var gitHubRepo = await 
+                    ( 
+                        options.IsOrganization
+                             ? gitHubFactory.CreateNewOrganizationGitHubRepositoryIfNotExists(options.RepoOwner, options.RepoName)
+                             : gitHubFactory.CreateNewGitHubRepositoryIfNotExists(options.RepoOwner, options.RepoName)
+                    );
                     if (!Directory.Exists(slnDir) || (!Directory.GetFiles(slnDir).Any() && !Directory.GetDirectories(slnDir).Any()))
                     {
                         var gitFactory = sp.GetRequiredService<IXtiGitFactory>();

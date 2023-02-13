@@ -4,6 +4,7 @@ internal sealed class ToolOptions
 {
     public string SrcDir { get; set; } = "";
     public string RepoOwner { get; set; } = "";
+    public bool IsOrganization { get; set; }
     public string RepoName { get; set; } = "";
     public string AppName { get; set; } = "";
     public string AppType { get; set; } = "";
