@@ -13,14 +13,16 @@
       "launchBrowser": true,
       "launchUrl": "Home",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "VersionKey": "Current"
       }
     },
     "__APPNAME__WebApp": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "VersionKey": "Current"
       },
       "applicationUrl": "https://__DOMAIN__:5001;http://__DOMAIN__:5000"
     }

@@ -1,4 +1,6 @@
-﻿namespace XTI___APPNAME__WebAppApi;
+﻿using XTI_Core;
+
+namespace XTI___APPNAME__WebAppApi;
 
 public sealed partial class __APPNAME__AppApi : WebAppApiWrapper
 {
@@ -11,10 +13,12 @@ public sealed partial class __APPNAME__AppApi : WebAppApiWrapper
         (
             new AppApi
             (
+                sp,
                 __APPNAME__Info.AppKey,
                 user,
                 ResourceAccess.AllowAuthenticated()
-                    .WithAllowed(AppRoleName.Admin)
+                    .WithAllowed(AppRoleName.Admin),
+                XtiSerializer.Serialize(new __APPNAME__AppOptions())
             ),
             sp
         )

@@ -18,6 +18,14 @@
       "defaultValue": "TheApp",
       "FileRename": "AppName",
       "replaces": "__APPNAME__"
+    },
+    "RepoName": {
+      "type": "parameter",
+      "datatype": "string",
+      "isRequired": true,
+      "defaultValue": "TheRepoName",
+      "FileRename": "Domain",
+      "replaces": "__REPONAME__"
     }
   }
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using XTI_App.Api;
 using XTI_HubAppClient.ConsoleApp.Extensions;
 using XTI___APPNAME__ConsoleAppApi;
 
@@ -12,13 +14,7 @@ await XtiConsoleAppHost.CreateDefault(__APPNAME__Info.AppKey, args)
         (
             (sp, agenda) =>
             {
-                agenda.AddScheduled<__APPNAME__AppApi>
-                (
-                    (api, agendaItem) =>
-                    {
-                        agendaItem.AddImmediate<TestAppApi>(api => api.Home.DoSomething);
-                    }
-                );
+                agenda.AddImmediate<__APPNAME__AppApi>(api => api.Home.DoSomething);
             }
         );
     })

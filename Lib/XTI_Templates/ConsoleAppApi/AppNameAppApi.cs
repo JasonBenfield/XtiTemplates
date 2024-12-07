@@ -1,4 +1,6 @@
-﻿namespace XTI___APPNAME__ConsoleAppApi;
+﻿using XTI_Core;
+
+namespace XTI___APPNAME__ConsoleAppApi;
 
 public sealed partial class __APPNAME__AppApi : ConsoleAppApiWrapper
 {
@@ -11,10 +13,12 @@ public sealed partial class __APPNAME__AppApi : ConsoleAppApiWrapper
         (
             new AppApi
             (
+                sp,
                 __APPNAME__Info.AppKey,
                 user,
                 ResourceAccess.AllowAuthenticated()
-                    .WithAllowed(AppRoleName.Admin)
+                    .WithAllowed(AppRoleName.Admin),
+                XtiSerializer.Serialize(new __APPNAME__AppOptions())
             ),
             sp
         )

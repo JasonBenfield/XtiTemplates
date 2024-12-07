@@ -6,15 +6,15 @@ internal sealed class SampleTest
     [Test]
     public async Task ShouldDoSomething()
     {
-        var tester = await Setup();
-        var result = await tester.Execute(new EmptyRequest());
+        var sp = await Setup();
+        var tester = TestActionTester.Create(sp, api => api.Home.DoSomething);
+        await tester.Execute(new());
     }
 
-    private async Task<__APPNAME__ActionTester<EmptyRequest, EmptyActionResult>> Setup(string envName = "Development")
+    private Task<IServiceProvider> Setup(string envName = "Development")
     {
         var host = new __APPNAME__TestHost();
-        var services = await host.Setup(envName);
-        return __APPNAME__ActionTester.Create(services, api => api.Home.DoSomething);
+        return host.Setup(envName);
     }
     */
 }

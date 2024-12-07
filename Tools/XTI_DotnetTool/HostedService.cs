@@ -72,9 +72,9 @@ internal sealed class HostedService : IHostedService
                     var gitHubFactory = sp.GetRequiredService<IGitHubFactory>();
                     var gitHubRepo = await 
                     ( 
-                        options.IsOrganization
-                             ? gitHubFactory.CreateNewOrganizationGitHubRepositoryIfNotExists(options.RepoOwner, options.RepoName)
-                             : gitHubFactory.CreateNewGitHubRepositoryIfNotExists(options.RepoOwner, options.RepoName)
+                        options.IsOrganization ? 
+                            gitHubFactory.CreateNewOrganizationGitHubRepositoryIfNotExists(options.RepoOwner, options.RepoName) : 
+                            gitHubFactory.CreateNewGitHubRepositoryIfNotExists(options.RepoOwner, options.RepoName)
                     );
                     if (!Directory.Exists(slnDir) || (!Directory.GetFiles(slnDir).Any() && !Directory.GetDirectories(slnDir).Any()))
                     {
@@ -425,17 +425,35 @@ internal sealed class HostedService : IHostedService
         );
     }
 
-    private static Task DotnetNewServiceAppApi(ToolOptions options, string appName) =>
+    private static Task DotnetNewServiceAppApi(ToolOptions options, string appName)=>
         DotnetNewProject(Path.Combine(getInternalDir(options), $"XTI_{appName}ServiceAppApi"), "xtiserviceappapi", appName);
 
     private static Task DotnetNewServiceApp(ToolOptions options, string appName) =>
-        DotnetNewProject(Path.Combine(getAppsDir(options), $"{appName}ServiceApp"), "xtiserviceapp", appName);
+        DotnetNewProject
+        (
+            Path.Combine(getAppsDir(options), $"{appName}ServiceApp"),
+            "xtiserviceapp",
+            appName,
+            new
+            {
+                RepoName = options.RepoName
+            }
+        );
 
     private static Task DotnetNewConsoleAppApi(ToolOptions options, string appName) =>
         DotnetNewProject(Path.Combine(getInternalDir(options), $"XTI_{appName}ConsoleAppApi"), "xticonsoleappapi", appName);
 
     private static Task DotnetNewConsoleApp(ToolOptions options, string appName) =>
-        DotnetNewProject(Path.Combine(getAppsDir(options), $"{appName}ConsoleApp"), "xticonsoleapp", appName);
+        DotnetNewProject
+        (
+            Path.Combine(getAppsDir(options), $"{appName}ConsoleApp"),
+            "xticonsoleapp",
+            appName,
+            new
+            {
+                RepoName = options.RepoName
+            }
+        );
 
     private static Task DotnetNewPackageExport(ToolOptions options, string appName) =>
         DotnetNewProject(Path.Combine(getLibDir(options), appName), "xtipackageexport", appName);

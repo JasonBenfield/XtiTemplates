@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "__APPNAME__ServiceApp": {
+      "commandName": "Project",
+      "commandLineArgs": "RunAsConsole --VersionKey Current",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

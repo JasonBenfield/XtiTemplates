@@ -2,10 +2,10 @@
   "profiles": {
     "XTI_DotnetTool": {
       "commandName": "Project",
-      "commandLineArgs": "--environment Production --Command Tests --AppName Test --AppType WebApp --RepoOwner JasonBenfield --RepoName Test --SrcDir C:\\XTI\\src",
+      //"commandLineArgs": "--environment Production --Command Tests --AppName Test --AppType WebApp --RepoOwner JasonBenfield --RepoName Test --SrcDir C:\\XTI\\src",
       //"commandLineArgs": "--SrcDir C:\\Users\\xarto\\source --RepoOwner JasonBenfield --RepoName Test --DeleteExisting false --AppName Test --AppType WebApp --InstallTemplatesLocally false",
       //"commandLineArgs": "--SrcDir C:\\Users\\xarto\\source --RepoOwner JasonBenfield --RepoName Test --DeleteExisting false --AppName Test --AppType ServiceApp --InstallTemplatesLocally false",
-      //"commandLineArgs": "--Command install",
+      "commandLineArgs": "--Command install",
       //"commandLineArgs": "--Command uninstall",
       "workingDirectory": "$(ProjectDir)"
     }

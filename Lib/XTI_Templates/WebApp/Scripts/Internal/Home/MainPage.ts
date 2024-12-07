@@ -1,13 +1,13 @@
-﻿import { BasicPage } from '@jasonbenfield/sharedwebapp/Components/BasicPage';
+﻿import { __APPNAME__Page } from '../__APPNAME__Page';
 import { MainPageView } from './MainPageView';
 import { TextComponent } from '@jasonbenfield/sharedwebapp/Components/TextComponent';
 
-class MainPage extends BasicPage {
+class MainPage extends __APPNAME__Page {
     protected readonly view: MainPageView;
 
-    constructor() {
-        super(new MainPageView());
+    constructor(view: MainPageView) {
+        super(view);
         new TextComponent(this.view.heading).setText('Home Page');
     }
 }
-new MainPage();
+new MainPage(new MainPageView());

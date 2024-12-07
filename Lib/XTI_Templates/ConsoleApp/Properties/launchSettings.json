@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "__APPNAME__ConsoleApp": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development",
+        "VersionKey": "Current"
+      }
+    }
+  }
+}
