@@ -9,7 +9,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
-		<PackageReference Include="XTI_AppSetupApp.Extensions" Version="1.4.51" />
+		<PackageReference Include="XTI_AppSetupApp.Extensions" Version="1.5.0" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -213,6 +213,7 @@ internal sealed class HostedService : IHostedService
     {
         await DotnetNewConsoleApp(options, appName);
         await DotnetNewConsoleAppApi(options, appName);
+        await DotnetNewAppApiActions(options, appName);
         await DotnetNewSetupApp(options, appName);
     }
 
@@ -220,6 +221,7 @@ internal sealed class HostedService : IHostedService
     {
         await DotnetNewServiceApp(options, appName);
         await DotnetNewServiceAppApi(options, appName);
+        await DotnetNewAppApiActions(options, appName);
         await DotnetNewSetupApp(options, appName);
     }
 
@@ -227,14 +229,15 @@ internal sealed class HostedService : IHostedService
     {
         await DotnetNewWebApp(options, appName);
         await DotnetNewWebAppApi(options, appName);
+        await DotnetNewWebAppApiActions(options, appName);
         await DotnetNewWebAppControllers(options, appName);
         await DotnetNewWebAppClient(options, appName);
         await DotnetNewApiGeneratorApp(options, appName);
         await DotnetNewSetupApp(options, appName);
     }
 
-    private static readonly string[] LocalTemplateNames = new[]
-    {
+    private static readonly string[] LocalTemplateNames =
+    [
         "ApiGeneratorApp",
         "ApiGroup",
         "ConsoleApp",
@@ -245,12 +248,14 @@ internal sealed class HostedService : IHostedService
         "SetupApp",
         "WebApp",
         "WebAppApi",
+        "WebAppApiActions",
         "WebAppClient",
         "WebAppControllers",
         "WebPackage",
+        "AppApiActions",
         "XtiSolution",
         "Tests"
-    };
+    ];
 
     private static async Task DotnetUninstallTemplatesLocally()
     {
@@ -341,6 +346,33 @@ internal sealed class HostedService : IHostedService
                 .Run();
             dotnetNewResult.EnsureExitCodeIsZero();
         }
+    }
+
+    private static Task DotnetNewAppApiActions(ToolOptions options, string appName)
+    {
+        var appType = getAppType(options);
+        return DotnetNewProject
+        (
+            Path.Combine(getInternalDir(options),
+                $"XTI_{appName}{appType}ApiActions"),
+            "xtiappapiactions",
+            appName,
+            new
+            {
+                AppType = appType
+            }
+        );
+    }
+
+    private static Task DotnetNewWebAppApiActions(ToolOptions options, string appName)
+    {
+        return DotnetNewProject
+        (
+            Path.Combine(getInternalDir(options),
+                $"XTI_{appName}WebAppApiActions"),
+            "xtiwebappapiactions",
+            appName
+        );
     }
 
     private static Task DotnetNewWebAppApi(ToolOptions options, string appName) =>

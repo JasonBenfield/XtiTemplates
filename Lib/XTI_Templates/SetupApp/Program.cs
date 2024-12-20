@@ -6,7 +6,7 @@ using XTI_App.Api;
 using XTI_AppSetupApp.Extensions;
 using XTI___APPNAME____APPTYPE__Api;
 
-await XtiSetupAppHost.CreateDefault(__APPNAME__Info.AppKey, args)
+await XtiSetupAppHost.CreateDefault(__APPNAME__AppKey.Value, args)
     .ConfigureServices((hostContext, services) =>
     {
         services.AddSingleton(_ => AppVersionKey.Current);

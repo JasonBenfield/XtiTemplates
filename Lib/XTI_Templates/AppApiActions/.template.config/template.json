@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Jason Benfield",
+  "classifications": [ "Common", "Library" ],
+  "identity": "XTI_Templates.AppApiActions",
+  "name": "XTI_Templates.AppApiActions",
+  "shortName": "xtiappapiactions",
+  "tags": {
+    "type": "project",
+    "language": "en-US"
+  },
+  "symbols": {
+    "AppName": {
+      "type": "parameter",
+      "datatype": "string",
+      "isRequired": true,
+      "defaultValue": "TheApp",
+      "FileRename": "AppName",
+      "replaces": "__APPNAME__"
+    },
+    "AppType": {
+      "type": "parameter",
+      "datatype": "string",
+      "isRequired": true,
+      "defaultValue": "WebApp",
+      "FileRename": "AppType",
+      "replaces": "__APPTYPE__"
+    }
+  }
+}

@@ -1,4 +1,4 @@
-﻿namespace XTI___APPNAME__ConsoleAppApi.Home;
+﻿namespace XTI___APPNAME____APPTYPE__ApiActions.Home;
 
 public sealed class DoSomethingAction : AppAction<EmptyRequest, EmptyActionResult>
 {

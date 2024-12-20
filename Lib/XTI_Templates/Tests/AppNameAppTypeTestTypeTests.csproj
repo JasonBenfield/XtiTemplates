@@ -24,8 +24,8 @@
 	<ItemGroup>
 		<PackageReference Include="XTI_Core.Extensions" Version="1.10.25" />
 		<PackageReference Include="XTI_Core.Fakes" Version="1.10.25" />
-		<PackageReference Include="XTI_WebApp.Fakes" Version="1.8.47" />
-		<PackageReference Include="XTI_HubAppClient.Extensions" Version="1.4.51" />
+		<PackageReference Include="XTI_WebApp.Fakes" Version="1.8.48" />
+		<PackageReference Include="XTI_HubAppClient.Extensions" Version="1.5.0" />
 	</ItemGroup>
 
 	<ItemGroup>

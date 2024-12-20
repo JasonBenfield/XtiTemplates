@@ -13,13 +13,13 @@ using XTI_Secrets.Extensions;
 
 namespace __APPNAME____APPTYPE____TESTTYPE__Tests;
 
-internal sealed class __APPNAME__TestHost
+public sealed class __APPNAME__TestHost
 {
     public Task<IServiceProvider> Setup(string envName, Action<IServiceCollection>? configure = null)
     {
         Environment.SetEnvironmentVariable("DOTNET_ENVIRONMENT", envName);
         var xtiEnv = XtiEnvironment.Parse(envName);
-        var appKey = __APPNAME__Info.AppKey;
+        var appKey = __APPNAME__AppKey.Value;
         var builder = new XtiHostBuilder(xtiEnv, appKey.Name.DisplayText, appKey.Type.DisplayText, []);
         builder.Services.AddFakesForXtiWebApp();
         builder.Services.AddSingleton<IHostEnvironment>

@@ -59,7 +59,6 @@
 
 	<ItemGroup>
 	  <Compile Include="Tests\SampleTest.cs" />
-	  <Compile Include="Tests\TestExtensions.cs" />
 	  <Compile Include="Tests\Usings.cs" />
 	</ItemGroup>
 
@@ -69,6 +68,14 @@
 	  <Content Include="ApiGroup\GroupName\DoSomethingAction.cs" />
 	  <Content Include="ApiGroup\GroupName\GroupNameGroup.cs" />
 	  <Content Include="ApiGroup\GroupName\GroupNameGroupExtensions.cs" />
+	  <Content Include="WebAppApiActions\.template.config\template.json" />
+	  <Content Include="WebAppApiActions\Home\IndexPage.cs" />
+	  <Content Include="WebAppApiActions\Usings.cs" />
+	  <Content Include="WebAppApiActions\XTI_AppNameWebAppApiActions.csproj" />
+	  <Content Include="AppApiActions\.template.config\template.json" />
+	  <Content Include="AppApiActions\Home\DoSomethingAction.cs" />
+	  <Content Include="AppApiActions\Usings.cs" />
+	  <Content Include="AppApiActions\XTI_AppNameAppTypeApiActions.csproj" />
 	  <Content Include="Tests\.template.config\template.json" />
 	  <Content Include="Tests\AppNameActionTester.cs" />
 	  <Content Include="Tests\AppNameTestHost.cs" />

@@ -4,7 +4,7 @@ using XTI_App.Api;
 using XTI_HubAppClient.ServiceApp.Extensions;
 using XTI___APPNAME__ServiceAppApi;
 
-var hostBuilder = XtiServiceAppHost.CreateDefault(__APPNAME__Info.AppKey, args)
+var hostBuilder = XtiServiceAppHost.CreateDefault(__APPNAME__AppKey.Value, args)
     .ConfigureServices((hostContext, services) =>
     {
         services.Add__APPNAME__AppApiServices();

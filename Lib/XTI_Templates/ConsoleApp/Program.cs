@@ -4,7 +4,7 @@ using XTI_App.Api;
 using XTI_HubAppClient.ConsoleApp.Extensions;
 using XTI___APPNAME__ConsoleAppApi;
 
-await XtiConsoleAppHost.CreateDefault(__APPNAME__Info.AppKey, args)
+await XtiConsoleAppHost.CreateDefault(__APPNAME__AppKey.Value, args)
     .ConfigureServices((hostContext, services) =>
     {
         services.Add__APPNAME__AppApiServices();
