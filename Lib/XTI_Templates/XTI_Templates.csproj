@@ -17,7 +17,6 @@
 		<Content Include="WebAppControllers\**\*" Exclude="WebAppControllers\**\bin\**;WebAppControllers\**\obj\**" />
 		<Content Include="WebAppClient\**\*" Exclude="WebAppClient\**\bin\**;WebAppClient\**\obj\**" />
 		<Content Include="WebApp\**\*" Exclude="WebApp\**\bin\**;WebApp\**\obj\**" />
-		<Content Include="ApiGeneratorApp\**\*" Exclude="ApiGeneratorApp\**\bin\**;ApiGeneratorApp\**\obj\**" />
 		<Content Include="SetupApp\**\*" Exclude="SetupApp\**\bin\**;SetupApp\**\obj\**" />
 		<Content Include="ServiceAppApi\**\*" Exclude="ServiceAppApi\**\bin\**;ServiceAppApi\**\obj\**" />
 		<Content Include="ServiceApp\**\*" Exclude="ServiceApp\**\bin\**;ServiceApp\**\obj\**" />
@@ -63,11 +62,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Content Include="ApiGroup\.template.config\template.json" />
-	  <Content Include="ApiGroup\GroupName\AppNameAppApi.Partial.cs" />
-	  <Content Include="ApiGroup\GroupName\DoSomethingAction.cs" />
-	  <Content Include="ApiGroup\GroupName\GroupNameGroup.cs" />
-	  <Content Include="ApiGroup\GroupName\GroupNameGroupExtensions.cs" />
 	  <Content Include="WebAppApiActions\.template.config\template.json" />
 	  <Content Include="WebAppApiActions\Home\IndexPage.cs" />
 	  <Content Include="WebAppApiActions\Usings.cs" />

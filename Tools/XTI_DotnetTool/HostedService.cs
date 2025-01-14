@@ -59,11 +59,7 @@ internal sealed class HostedService : IHostedService
                 var appType = getAppType(options);
                 var appName = options.AppName.Replace(" ", "");
                 var fullAppName = $"{appName}{appType}";
-                if (options.Command.Equals("apigroup", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    await DotnetNewApiGroup(options, appName);
-                }
-                else if (options.Command.Equals("tests", StringComparison.InvariantCultureIgnoreCase))
+                if (options.Command.Equals("tests", StringComparison.InvariantCultureIgnoreCase))
                 {
                     await DotnetTests(options);
                 }
@@ -130,34 +126,6 @@ internal sealed class HostedService : IHostedService
         }
         var lifetime = scope.ServiceProvider.GetRequiredService<IHostApplicationLifetime>();
         lifetime.StopApplication();
-    }
-
-    private static async Task DotnetNewApiGroup(ToolOptions options, string appName)
-    {
-        if (string.IsNullOrWhiteSpace(options.GroupName)) { throw new ArgumentException("Group Name is required."); }
-        var templateName = "xtiapigroup";
-        var appType = getAppType(options);
-        var projectDir = Path.Combine(getInternalDir(options), $"XTI_{appName}{appType}Api");
-        if (!Directory.Exists(projectDir))
-        {
-            throw new ArgumentException($"Project Directory '{projectDir}' does not exist.");
-        }
-        if (Directory.Exists(Path.Combine(projectDir, options.GroupName)))
-        {
-            throw new ArgumentException($"Api Group '{options.GroupName}' already exists.");
-        }
-        Console.WriteLine($"running dotnet new '{templateName}' '{projectDir}'");
-        var dotnetNewResult = await new WinProcess("dotnet")
-            .WriteOutputToConsole()
-            .SetWorkingDirectory(projectDir)
-            .AddArgument("new")
-            .AddArgument(templateName)
-            .UseArgumentNameDelimiter("--")
-            .AddArgument("AppName", appName)
-            .AddArgument("AppType", appType)
-            .AddArgument("GroupName", options.GroupName)
-            .Run();
-        dotnetNewResult.EnsureExitCodeIsZero();
     }
 
     private static async Task NpmInstall(ToolOptions options)
@@ -232,14 +200,11 @@ internal sealed class HostedService : IHostedService
         await DotnetNewWebAppApiActions(options, appName);
         await DotnetNewWebAppControllers(options, appName);
         await DotnetNewWebAppClient(options, appName);
-        await DotnetNewApiGeneratorApp(options, appName);
         await DotnetNewSetupApp(options, appName);
     }
 
     private static readonly string[] LocalTemplateNames =
     [
-        "ApiGeneratorApp",
-        "ApiGroup",
         "ConsoleApp",
         "ConsoleAppApi",
         "PackageExport",
@@ -383,19 +348,6 @@ internal sealed class HostedService : IHostedService
 
     private static Task DotnetNewWebAppClient(ToolOptions options, string appName) =>
         DotnetNewProject(Path.Combine(getLibDir(options), $"XTI_{appName}AppClient"), "xtiwebappclient", appName);
-
-    private static Task DotnetNewApiGeneratorApp(ToolOptions options, string appName) =>
-        DotnetNewProject
-        (
-            Path.Combine(getAppsDir(options), $"{appName}ApiGeneratorApp"),
-            "xtiapigeneratorapp",
-            appName,
-            new
-            {
-                AppType = getAppType(options),
-                ClientType = getAppType(options) == "WebApp" ? "App" : "Service"
-            }
-        );
 
     private static Task DotnetNewSetupApp(ToolOptions options, string appName) =>
         DotnetNewProject
